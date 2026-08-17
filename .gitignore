@@ -9,3 +9,10 @@ Thumbs.db
 files/*
 !files/Dante_Benedetti_Resume.pdf
 !files/LitterBot_Final_Report.pdf
+
+# Raw camera video: 1080p60 originals are 100-270MB, over GitHub's
+# 100MB per-file limit. Transcoded, audio-stripped copies are committed
+# alongside them instead.
+images/robot arm/
+images/steadifly/20250602_203353.mp4
+images/werc/Snapchat-348518302.jpg

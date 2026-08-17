@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Vision-guided robotic pick-and-place sorting on the OpenManipulator-X - colour ball detection, 3D pose estimation, trajectory planning, and bin sorting."
+    >
+
+    <title>Vision-Based Robotic Manipulator | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=8">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Robotics · Computer Vision · Trajectory Planning
+                </p>
+
+                <h1>Vision-Based Robotic Manipulator</h1>
+
+                <p class="hero-text">
+                    A vision-guided pick-and-place sorting system on the
+                    OpenManipulator-X: find coloured balls, work out where they
+                    are in 3D, plan a path, pick them up, and sort them by
+                    colour.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Course</span>
+                        EE 471 — Vision-Based Robotic Manipulation,
+                        Prof. Siavash Farzan
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        September – December 2025
+                    </div>
+                    <div>
+                        <span class="meta-label">Platform</span>
+                        OpenManipulator-X, Intel RealSense D435
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>Forward Kinematics</span>
+                    <span>Inverse Kinematics</span>
+                    <span>Jacobians</span>
+                    <span>Trajectory Planning</span>
+                    <span>AprilTag Calibration</span>
+                    <span>Visual Servoing</span>
+                    <span>RGB-D</span>
+                    <span>OpenCV</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Attribution -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <div class="attribution">
+
+                    <h3>A note on authorship</h3>
+
+                    <p>
+                        This was structured coursework. The course framework,
+                        starter code, and hardware interface classes were
+                        written by <strong>Prof. Siavash Farzan</strong> of the
+                        Cal Poly Electrical Engineering Department — the robot
+                        and camera interface classes carry his copyright header
+                        directly, and the trajectory planner shipped as a
+                        skeleton with the methods left to be filled in.
+                    </p>
+
+                    <p>
+                        Students implemented the designated algorithm functions
+                        inside that scaffolding. What this page documents is
+                        the <strong>topics I studied and the system I got
+                        working</strong> — not a claim of having authored the
+                        surrounding codebase.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- What it does -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">The system</p>
+
+                <h2>Five stages, end to end.</h2>
+
+                <ul class="case-list">
+                    <li><strong>Detect</strong> coloured spherical objects in the camera frame.</li>
+                    <li><strong>Estimate</strong> their 3D position relative to the robot base.</li>
+                    <li><strong>Plan</strong> a smooth, collision-free trajectory to each one.</li>
+                    <li><strong>Grasp</strong> the ball with the OpenManipulator-X gripper.</li>
+                    <li><strong>Sort</strong> it into the matching colour-coded bin.</li>
+                </ul>
+
+                <p>
+                    The earlier labs in the course built each piece separately —
+                    communication and position control, forward and inverse
+                    kinematics, task-space and joint-space polynomial
+                    trajectories, Jacobian-based differential motion,
+                    camera-to-robot calibration with AprilTags, and
+                    position-based visual servoing. The final lab was the one
+                    that required putting them together and making the
+                    combination hold up: detection robustness, workspace
+                    safety, error mitigation, and iterative closed-loop
+                    testing.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Gallery -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Perception</p>
+
+                <h2>Finding the ball.</h2>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/manipulator/detection-pipeline.jpg"
+                        alt="Three-stage ball detection pipeline shown side by side, from the raw camera image through intermediate processing to the final detected result."
+                        width="1965"
+                        height="571"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The detection pipeline, stage by stage.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/manipulator/ball-detection.jpg"
+                        alt="Camera view of coloured balls on a calibration board, each identified and circled by the colour detection routine."
+                        width="1463"
+                        height="1128"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Colour ball detection running on the workspace image.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/manipulator/state-diagram.jpg"
+                        alt="Flowchart of the pick-and-place state machine, showing transitions between search, approach, grasp, transport, and release states."
+                        width="1102"
+                        height="1704"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The pick-and-place state machine.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Video -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Demonstration</p>
+
+                <h2>Sorting, start to finish.</h2>
+
+                <p class="section-intro">
+                    Three coloured balls detected, picked, and sorted into
+                    their bins. Silent — the audio track has been removed.
+                </p>
+
+                <figure class="project-figure">
+                    <video
+                        src="../images/manipulator/pick-and-place.mp4"
+                        controls
+                        muted
+                        playsinline
+                        preload="metadata"
+                        width="1080"
+                        height="1920"
+                    ></video>
+                    <figcaption>
+                        The OpenManipulator-X detecting and sorting three
+                        coloured balls over an AprilTag-calibrated workspace.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=8"></script>
+
+</body>
+</html>

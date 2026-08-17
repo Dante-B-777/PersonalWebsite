@@ -971,3 +971,12 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+.project-figure video {
+    width: 100%;
+    height: auto;
+    max-height: 78vh;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #000;
+}

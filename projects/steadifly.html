@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SteadiFly - a bare-metal STM32 three-axis flight stabilizer using an MPU6050 IMU, Kalman filtering, and servo-driven control surfaces to hold level flight."
+    >
+
+    <title>SteadiFly Flight Stabilizer | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=8">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Embedded Controls · Bare-Metal STM32 · Sensor Fusion
+                </p>
+
+                <h1>SteadiFly — Three-Axis Flight Stabilizer</h1>
+
+                <p class="hero-text">
+                    A bare-metal STM32 stabilizer that reads an IMU, estimates
+                    aircraft attitude through a Kalman filter, and drives
+                    control surfaces to counteract disturbances and hold level
+                    flight.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Course</span>
+                        EE 329 — Microcontroller-Based Systems Design,
+                        Prof. John Penvenne
+                    </div>
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Production, control development, testing, and
+                        hardware integration
+                    </div>
+                    <div>
+                        <span class="meta-label">Platform</span>
+                        STM32 Nucleo, MPU6050, SG90 servos
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>STM32</span>
+                    <span>Bare-Metal C</span>
+                    <span>MPU6050</span>
+                    <span>Kalman Filter</span>
+                    <span>I2C</span>
+                    <span>UART</span>
+                    <span>PWM Servo Drive</span>
+                    <span>MATLAB</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Specs -->
+        <section class="section results-section">
+
+            <div class="container">
+
+                <p class="section-label">Specifications</p>
+
+                <h2>The build, by the numbers.</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <span class="stat-value">324 mm</span>
+                        <span class="stat-label">
+                            Airframe length (324 × 96 × 50.3 mm)
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">1361 g</span>
+                        <span class="stat-label">
+                            All-up weight
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">&gt;18 h</span>
+                        <span class="stat-label">
+                            Battery life
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">1 kHz</span>
+                        <span class="stat-label">
+                            IMU sample rate over I2C, 16-bit resolution
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- The aircraft -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">The aircraft</p>
+
+                <h2>Built to be flown at.</h2>
+
+                <div class="two-up">
+
+                    <figure class="project-figure">
+                        <img
+                            src="../images/steadifly/airframe.jpg"
+                            alt="The SteadiFly airframe from above: a white foam fuselage marked with the SteadiFly logo, cardboard wings and tailplane with black edging, blue micro servos at the control surfaces, and a battery pack strapped on top."
+                            width="1199"
+                            height="1600"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            The completed airframe, with servos mounted at the
+                            control surfaces and the battery pack on the spine.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="project-figure">
+                        <img
+                            src="../images/steadifly/build.jpg"
+                            alt="The SteadiFly during assembly, showing the internal electronics and wiring before the airframe was closed up."
+                            width="1200"
+                            height="1600"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            During the build.
+                        </figcaption>
+                    </figure>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Architecture -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Software</p>
+
+                <h2>A cyclic loop on bare metal.</h2>
+
+                <p class="large-text">
+                    No RTOS and no HAL — the control system runs as a
+                    continuous cyclic loop handling initialization, sensor
+                    acquisition, filtering, control computation, and actuator
+                    output in sequence.
+                </p>
+
+                <p>
+                    The MPU6050 supplies three-axis gyroscope and
+                    accelerometer data over I2C at 1 kHz. That feeds a Kalman
+                    filter which estimates pitch, roll, and yaw; the estimates
+                    are smoothed for display and logged over UART at 115200
+                    baud, where PuTTY and MATLAB were used to inspect the data
+                    during tuning. Independent control paths then drive the
+                    servos on each control surface to oppose the measured
+                    disturbance.
+                </p>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/steadifly/flowchart.png"
+                        alt="Flowchart of the SteadiFly firmware showing initialization followed by a repeating loop of sensor read, filter, control computation, and servo output."
+                        width="672"
+                        height="833"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Firmware flow — initialization, then the cyclic control
+                        loop.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/steadifly/wiring-diagram.png"
+                        alt="Wiring diagram showing the Nucleo board connected to the MPU6050 over I2C, five servos on PWM outputs, the UART serial link, and the power supply rails."
+                        width="1753"
+                        height="965"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        System wiring — Nucleo, IMU, servos, serial link, and
+                        power.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Video -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Demonstration</p>
+
+                <h2>Holding level.</h2>
+
+                <p class="section-intro">
+                    The stabilizer responding to disturbance. Silent — the
+                    audio track has been removed.
+                </p>
+
+                <figure class="project-figure">
+                    <video
+                        src="../images/steadifly/flight-test.mp4"
+                        controls
+                        muted
+                        playsinline
+                        preload="metadata"
+                        width="1080"
+                        height="1920"
+                    ></video>
+                    <figcaption>
+                        Control surfaces driven by the Kalman-filtered attitude
+                        estimate as the airframe is tilted.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=8"></script>
+
+</body>
+</html>
