@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Custom 232 mm quadrotor flight controller - per-rotor angular velocity control, ESKF state estimation, bidirectional DShot RPM feedback, and in-flight drag-torque identification."
+    >
+
+    <title>Quadrotor Flight Controller | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=7">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Flight Controls · Embedded Systems · State Estimation
+                </p>
+
+                <h1>Autonomous Quadrotor Flight Controller</h1>
+
+                <p class="hero-text">
+                    A 232 mm quadrotor built from scratch over a summer, with a
+                    flight controller written from the frame conventions up —
+                    and a sign-convention bug hunt that explains why it flies
+                    now.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Sole designer and developer
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        June – August 2026
+                    </div>
+                    <div>
+                        <span class="meta-label">Context</span>
+                        Independent summer project
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>Bidirectional DShot</span>
+                    <span>Error-State KF</span>
+                    <span>Rotor-Rate Control</span>
+                    <span>Optical Flow</span>
+                    <span>Time-of-Flight</span>
+                    <span>Magnetometer</span>
+                    <span>System Identification</span>
+                    <span>ESP-NOW Telemetry</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- The build -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">The aircraft</p>
+
+                <h2>Built, flown, and instrumented.</h2>
+
+                <div class="two-up">
+
+                    <figure class="project-figure">
+                        <img
+                            src="../images/drone/airframe.jpg"
+                            alt="Top-down view of the 232 mm quadrotor: carbon arms, four brushless motors with tri-blade propellers, a LiPo battery strapped to a perfboard deck, and an IMU breakout board."
+                            width="1600"
+                            height="1200"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            The 232 mm airframe — four brushless motors on
+                            5-inch tri-blade props, with the flight electronics
+                            and IMU on a perfboard deck.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="project-figure">
+                        <img
+                            src="../images/drone/transmitter.jpg"
+                            alt="Edge-on view of the custom transmitter: a flat white deck with two analogue gimbals, a control PCB underneath, and a battery pack taped to the top."
+                            width="1600"
+                            height="1200"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            The matching transmitter, also built for the
+                            project — four real analogue axes with calibration
+                            stored in NVS.
+                        </figcaption>
+                    </figure>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Architecture -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Architecture</p>
+
+                <h2>Control on rotor angular velocity.</h2>
+
+                <p class="large-text">
+                    Rather than commanding motor throttle directly, the
+                    controller resolves everything down to a per-rotor angular
+                    velocity setpoint, then closes a speed loop on real RPM fed
+                    back over bidirectional DShot.
+                </p>
+
+                <pre class="code-block">position → velocity → acceleration → tilt
+tilt → body rate → angular acceleration → torque
+(thrust, torque) → RotorAllocator → per-rotor ω setpoint
+ω setpoint → RotorSpeedLoop (closed on RPM) → DShot</pre>
+
+                <h3>Conventions live in one file</h3>
+
+                <p>
+                    A single header defines the body frame — +X right, +Y
+                    forward, +Z up — declares every rotation right-handed, and
+                    derives the IMU transform from that. Anything downstream
+                    that needs a sign asks the header rather than deciding for
+                    itself.
+                </p>
+
+                <h3>The mixer is derived, not written down</h3>
+
+                <p>
+                    The allocation matrix is built at run time from rotor
+                    positions and spin directions by summing r × F, so a sign
+                    error in the mixer would have to be a geometry error first.
+                </p>
+
+                <h3>Drag torque identified in flight</h3>
+
+                <p>
+                    The propeller drag-torque coefficient was never
+                    characterised for this airframe, so the controller
+                    identifies it live using normalised LMS, gated behind a
+                    commissioning flag plus checks on RPM freshness,
+                    excitation, allocator saturation, and attitude. It is
+                    hard-clamped to a physical band, so a bad estimate degrades
+                    to slightly-off yaw authority rather than a sign flip.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Debugging story -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Debugging</p>
+
+                <h2>One wrong sign, five different symptoms.</h2>
+
+                <p class="large-text">
+                    Roll and pitch flew well. Yaw and horizontal position did
+                    not. The cause was a single variable holding a
+                    counter-clockwise-positive rate while its name said
+                    clockwise — the IMU is mounted upside down, and a gyro sign
+                    correction had quietly inverted it.
+                </p>
+
+                <p>
+                    Four separate consumers each assumed clockwise and each
+                    broke differently: the yaw mixer turned into positive
+                    feedback and saturated, the magnetic-heading function
+                    returned the negative of the right-handed yaw it
+                    advertised and fed that to the state estimator, the two
+                    body/navigation frame transforms were written as each
+                    other's transpose — invisible at heading zero, fully
+                    cross-coupled at 90° — and the optical-flow lever-arm term
+                    injected fake translation that reinforced the error during
+                    rotation.
+                </p>
+
+                <p>
+                    A fifth problem was found last and mattered most for the
+                    symptom: on the transmitter, the yaw command was a
+                    compile-time constant zero, read from no pin at all. The
+                    receiver was handed 0.0 on every packet. That alone would
+                    have prevented yaw control even with the other four fixed.
+                </p>
+
+                <div class="project-highlight">
+                    The hover log corroborates it: a yaw rate pinned near
+                    ±45°/s against a small opposing command is the signature of
+                    sign-inverted feedback, and horizontal position walked away
+                    from a fixed target and never returned.
+                </div>
+
+                <p>
+                    An earlier diagnosis had correctly identified gating,
+                    signal-quality, and gain problems and fixed them. It never
+                    found the sign layer — and no gain change could have.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Flight data -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Flight data</p>
+
+                <h2>Telemetry from a hover run.</h2>
+
+                <p class="section-intro">
+                    Logged live over the air at roughly 50 Hz. Two arm cycles
+                    appear in this run.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/drone/hover-tracking.png"
+                        alt="Four-panel plot from a hover flight: altitude tracking against a 0.5 metre setpoint, roll and pitch angles, yaw rate over time, and per-rotor angular velocity setpoints."
+                        width="1375"
+                        height="836"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Altitude holds within a few centimetres of the 0.5 m
+                        setpoint; roll and pitch settle to roughly ±2°; the
+                        large yaw-rate oscillation in the first arm cycle is
+                        absent from the second; per-rotor setpoints sit near
+                        1000 rad/s in steady hover.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=7"></script>
+
+</body>
+</html>
