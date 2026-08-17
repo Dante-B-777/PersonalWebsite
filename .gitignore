@@ -8,3 +8,4 @@ Thumbs.db
 # here explicitly with their own negation line.
 files/*
 !files/Dante_Benedetti_Resume.pdf
+!files/LitterBot_Final_Report.pdf

@@ -858,3 +858,9 @@ footer {
         padding: 45px 0 40px;
     }
 }
+
+.doc-note {
+    margin-top: 22px;
+    color: #666;
+    font-size: 0.92rem;
+}
