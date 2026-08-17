@@ -500,6 +500,17 @@ nav a:hover {
     line-height: 1.3;
 }
 
+.recognition-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.recognition-link:hover {
+    text-decoration: underline;
+}
+
 .recognition-year {
     margin-bottom: 0;
     text-transform: uppercase;
