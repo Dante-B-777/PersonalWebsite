@@ -3,20 +3,770 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dante Benedetti</title>
+
+    <meta
+        name="description"
+        content="Dante Benedetti - Electrical Engineering portfolio focused on autonomous systems, controls, robotics, embedded systems, and computer vision."
+    >
+
+    <title>Dante Benedetti | Electrical Engineering Portfolio</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <h1>Dante Benedetti</h1>
-    <p>Engineering Portfolio</p>
 
-    <h2>About Me</h2>
-    <p>Welcome to my personal website.</p>
+    <!-- Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
 
-    <h2>Projects</h2>
-    <p>Projects coming soon.</p>
+            <a class="logo" href="#">Dante Benedetti</a>
 
-    <h2>Experience</h2>
-    <p>Experience coming soon.</p>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero">
+
+            <div class="container hero-content">
+
+                <p class="eyebrow">
+                    Electrical Engineering · Autonomous Systems · Controls
+                </p>
+
+                <h1>Dante Benedetti</h1>
+
+                <p class="hero-text">
+                    Electrical engineer focused on autonomous systems, controls,
+                    robotics, computer vision, and embedded systems.
+                </p>
+
+                <p class="hero-subtext">
+                    I design and build intelligent electromechanical systems
+                    spanning real-time embedded control, state estimation,
+                    autonomous navigation, computer vision, and robotic manipulation.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a class="button primary" href="#projects">
+                        View Projects
+                    </a>
+
+                    <a
+                        class="button secondary"
+                        href="files/Dante_Benedetti_Resume.pdf"
+                        target="_blank"
+                    >
+                        View Resume
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- About -->
+        <section id="about" class="section">
+
+            <div class="container">
+
+                <p class="section-label">About</p>
+
+                <h2>
+                    Engineering through design, experimentation,
+                    integration, and testing.
+                </h2>
+
+                <p class="large-text">
+                    I am an Electrical Engineering student at California
+                    Polytechnic State University, San Luis Obispo, with a
+                    particular interest in controls, robotics, embedded systems,
+                    and autonomous machines.
+                </p>
+
+                <p>
+                    My projects have included autonomous mobile robots,
+                    quadrotor flight control, computer vision, robotic
+                    manipulation, embedded motor control, renewable energy
+                    systems, and autonomous vehicle navigation. I enjoy working
+                    across the full engineering stack — from sensors,
+                    electronics, firmware, and control algorithms to system
+                    integration and physical testing.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Projects -->
+        <section id="projects" class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Selected Work</p>
+
+                <h2>Projects</h2>
+
+                <p class="section-intro">
+                    A selection of projects involving autonomous systems,
+                    robotics, controls, embedded systems, computer vision,
+                    and electrical engineering.
+                </p>
+
+
+                <div class="project-grid">
+
+
+                    <!-- LitterBot -->
+                    <article class="project-card featured-project">
+
+                        <div class="project-image placeholder">
+                            Add LitterBot Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Autonomous Robotics · Computer Vision · Embedded Systems
+                            </p>
+
+                            <h3>
+                                Autonomous Vision-Based Litter Collection Rover
+                            </h3>
+
+                            <p>
+                                Designed and built a three-person senior-project
+                                autonomous rover capable of detecting, navigating
+                                to, and collecting ground-level litter.
+                            </p>
+
+                            <p>
+                                The system integrates an NVIDIA Jetson Orin Nano
+                                running ROS 2 with an STM32 real-time control
+                                platform, YOLO-based object detection, LiDAR
+                                mapping, mecanum-wheel mobility, autonomous path
+                                planning, and a two-degree-of-freedom collection
+                                mechanism.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>ROS 2</span>
+                                <span>STM32</span>
+                                <span>Jetson Orin Nano</span>
+                                <span>YOLO</span>
+                                <span>LiDAR</span>
+                                <span>EKF</span>
+                                <span>Theta*</span>
+                                <span>Pure Pursuit</span>
+                            </div>
+
+                            <a href="#">
+                                View Project →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Quadrotor -->
+                    <article class="project-card">
+
+                        <div class="project-image placeholder">
+                            Add Quadrotor Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Flight Controls · Embedded Systems · State Estimation
+                            </p>
+
+                            <h3>
+                                Autonomous Quadrotor Flight Controller
+                            </h3>
+
+                            <p>
+                                Designed and built a custom 232 mm quadrotor
+                                platform using 5-inch propellers and a
+                                sensor-fusion-based flight-control architecture.
+                            </p>
+
+                            <p>
+                                Developed attitude and altitude control using PID
+                                feedback with IMU, magnetometer, optical-flow,
+                                and time-of-flight sensing, while implementing
+                                EKF-based state estimation for autonomous
+                                position control.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>PID</span>
+                                <span>EKF</span>
+                                <span>IMU</span>
+                                <span>Optical Flow</span>
+                                <span>ToF</span>
+                                <span>Magnetometer</span>
+                            </div>
+
+                            <a href="#">
+                                View Project →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- QCar -->
+                    <article class="project-card">
+
+                        <div class="project-image placeholder">
+                            Add QCar Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Autonomous Vehicles · Computer Vision · Planning & Control
+                            </p>
+
+                            <h3>
+                                Perception-Aware Autonomous Vehicle
+                            </h3>
+
+                            <p>
+                                Developed an autonomous-driving stack for the
+                                Quanser QCar 2 capable of navigating a planned
+                                route while responding to stop signs and traffic
+                                lights.
+                            </p>
+
+                            <p>
+                                Integrated global path planning, Stanley steering,
+                                PI speed control, RGB-D perception, traffic-sign
+                                detection, traffic-light classification, and
+                                finite-state-machine behavior in both simulation
+                                and physical testing.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>OpenCV</span>
+                                <span>Stanley Control</span>
+                                <span>PI Control</span>
+                                <span>RGB-D</span>
+                                <span>FSM</span>
+                            </div>
+
+                            <a href="#">
+                                View Project →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Hydrogen -->
+                    <article class="project-card">
+
+                        <div class="project-image placeholder">
+                            Add Hydrogen Project Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Energy Systems · Research · Engineering Design
+                            </p>
+
+                            <h3>
+                                Green Hydrogen Grid Stabilization
+                            </h3>
+
+                            <p>
+                                Researched, designed, and evaluated a scalable
+                                green-hydrogen energy-storage system intended to
+                                improve electrical-grid stability.
+                            </p>
+
+                            <p>
+                                Developed the project through multiple design
+                                iterations and presented the final system at the
+                                WERC Environmental Design Contest at New Mexico
+                                State University.
+                            </p>
+
+                            <div class="project-highlight">
+                                1st Place — WERC Environmental Design Contest,
+                                Task 2
+                            </div>
+
+                            <div class="project-highlight">
+                                IEEE Xplore Publication:
+                                Sustainable Grid Stabilization Via Green Hydrogen Technologies
+                            </div>
+
+                            <a href="#">
+                                View Project →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Stabilizer -->
+                    <article class="project-card">
+
+                        <div class="project-image placeholder">
+                            Add Stabilizer Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Embedded Controls · STM32
+                            </p>
+
+                            <h3>
+                                3-Axis Flight Stabilizer
+                            </h3>
+
+                            <p>
+                                Developed and tested a three-axis embedded
+                                stabilization system using gyroscope and
+                                accelerometer feedback, five servo motors,
+                                and an STM32-based Nucleo platform.
+                            </p>
+
+                            <p>
+                                Worked through system production, control
+                                development, testing, troubleshooting, and
+                                hardware integration.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>STM32</span>
+                                <span>IMU</span>
+                                <span>Servos</span>
+                                <span>Embedded Control</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Manipulator -->
+                    <article class="project-card">
+
+                        <div class="project-image placeholder">
+                            Add Robotic Arm Photo
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Robotics · Computer Vision · Python
+                            </p>
+
+                            <h3>
+                                Vision-Based Robotic Manipulator
+                            </h3>
+
+                            <p>
+                                Implemented image-processing and robotic-control
+                                algorithms for a four-joint robotic arm using
+                                object-oriented Python.
+                            </p>
+
+                            <p>
+                                Developed trajectory-generation methods and
+                                evaluated forward and inverse kinematic models
+                                for autonomous manipulation tasks.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>Python</span>
+                                <span>Computer Vision</span>
+                                <span>Forward Kinematics</span>
+                                <span>Inverse Kinematics</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Education -->
+        <section id="education" class="section">
+
+            <div class="container">
+
+                <p class="section-label">Education</p>
+
+                <h2>California Polytechnic State University</h2>
+
+                <p class="education-location">
+                    San Luis Obispo, California
+                </p>
+
+
+                <div class="education-grid">
+
+                    <div class="education-card">
+
+                        <p class="education-status">
+                            Incoming · Fall 2026
+                        </p>
+
+                        <h3>
+                            M.S. Electrical Engineering
+                        </h3>
+
+                        <p>
+                            College of Engineering
+                        </p>
+
+                    </div>
+
+
+                    <div class="education-card">
+
+                        <p class="education-status">
+                            2022–2026
+                        </p>
+
+                        <h3>
+                            B.S. Electrical Engineering
+                        </h3>
+
+                        <p>
+                            GPA: 3.89
+                        </p>
+
+                        <p>
+                            Dean's List
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="coursework">
+
+                    <h3>Selected Coursework</h3>
+
+                    <div class="coursework-grid">
+
+                        <div>
+                            <h4>Controls & Autonomous Systems</h4>
+
+                            <ul>
+                                <li>Control Systems Theory</li>
+                                <li>Classical Control Systems</li>
+                                <li>Digital Control Systems</li>
+                                <li>
+                                    Planning & Control for Autonomous Vehicles
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div>
+                            <h4>Robotics & Computer Vision</h4>
+
+                            <ul>
+                                <li>Computer Vision</li>
+                                <li>
+                                    Vision-Based Robotic Manipulation
+                                </li>
+                                <li>
+                                    Autonomous Vehicles Laboratory
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div>
+                            <h4>Embedded & Digital Systems</h4>
+
+                            <ul>
+                                <li>MCU-Based System Design</li>
+                                <li>Digital Design</li>
+                                <li>
+                                    Computer Design & Assembly Language
+                                </li>
+                                <li>Data Structures</li>
+                            </ul>
+                        </div>
+
+
+                        <div>
+                            <h4>Electronics & Electromagnetics</h4>
+
+                            <ul>
+                                <li>Electronic Design</li>
+                                <li>
+                                    Analog Electronics & Integrated Circuits
+                                </li>
+                                <li>Electric Circuit Analysis I–III</li>
+                                <li>Electromagnetic Waves</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skills">
+
+                    <h3>Technical Skills</h3>
+
+                    <div class="skills-grid">
+
+                        <div>
+                            <h4>Programming & Embedded</h4>
+                            <p>
+                                Python · STM32 · CubeIDE · ROS 2 · Vivado
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>Controls & Robotics</h4>
+                            <p>
+                                PID · EKF · State Estimation · Path Planning ·
+                                Computer Vision · Robotic Manipulation
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>Engineering Tools</h4>
+                            <p>
+                                Fusion 360 · LTspice · AutoCAD · Git
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4>Laboratory</h4>
+                            <p>
+                                Oscilloscope · Function Generator ·
+                                Digital Power Supply · Soldering
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Experience -->
+        <section id="experience" class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Professional Experience</p>
+
+                <h2>Engineering beyond the classroom.</h2>
+
+
+                <div class="experience-item">
+
+                    <div class="experience-heading">
+
+                        <div>
+                            <h3>
+                                Project Engineer
+                            </h3>
+
+                            <p class="company">
+                                Pribuss Engineering Inc.
+                            </p>
+                        </div>
+
+                        <p class="meta">
+                            South San Francisco · June–September 2025
+                        </p>
+
+                    </div>
+
+                    <p>
+                        Designed multi-level fire-protection systems using
+                        AutoCAD and AutoSprink for projects requiring San
+                        Francisco city approval.
+                    </p>
+
+                    <p>
+                        Coordinated field inspections, material deliveries,
+                        and hydraulic-design requirements while working
+                        across engineering, construction, and municipal
+                        approval processes.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Awards / Publication -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">
+                    Recognition
+                </p>
+
+                <h2>
+                    Awards & Publication
+                </h2>
+
+
+                <div class="recognition-grid">
+
+                    <div class="recognition-card">
+
+                        <p class="recognition-year">
+                            2025
+                        </p>
+
+                        <h3>
+                            1st Place — WERC Environmental Design Contest
+                        </h3>
+
+                        <p>
+                            Task 2 Overall Design
+                        </p>
+
+                    </div>
+
+
+                    <div class="recognition-card">
+
+                        <p class="recognition-year">
+                            IEEE Xplore
+                        </p>
+
+                        <h3>
+                            Sustainable Grid Stabilization Via Green Hydrogen Technologies
+                        </h3>
+
+                        <p>
+                            Research publication developed through the WERC
+                            Environmental Design project.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Contact -->
+        <section id="contact" class="section contact-section">
+
+            <div class="container">
+
+                <p class="section-label">
+                    Contact
+                </p>
+
+                <h2>
+                    Let's connect.
+                </h2>
+
+                <p class="large-text">
+                    I am interested in opportunities involving autonomous
+                    systems, robotics, controls, embedded systems, and
+                    electrical engineering.
+                </p>
+
+
+                <div class="contact-links">
+
+                    <a href="mailto:dabenede@calpoly.edu">
+                        Email
+                    </a>
+
+                    <a href="#" target="_blank">
+                        LinkedIn
+                    </a>
+
+                    <a
+                        href="https://github.com/Dante-B-777"
+                        target="_blank"
+                    >
+                        GitHub
+                    </a>
+
+                    <a
+                        href="files/Dante_Benedetti_Resume.pdf"
+                        target="_blank"
+                    >
+                        Resume
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <p>
+                © 2026 Dante Benedetti
+            </p>
+
+            <p>
+                dantebenedetti.com
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/main.js"></script>
+
 </body>
 </html>
