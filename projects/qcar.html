@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Perception-aware autonomous driving on the Quanser QCar 2 - IMU characterization, GPS-aided EKF state estimation, steering and speed control, camera calibration, LiDAR occupancy mapping, and driving under traffic law."
+    >
+
+    <title>Perception-Aware Autonomous Vehicle | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=6">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Autonomous Vehicles · State Estimation · Perception
+                </p>
+
+                <h1>Perception-Aware Autonomous Vehicle</h1>
+
+                <p class="hero-text">
+                    A term of coursework on the Quanser QCar 2, building from
+                    raw IMU characterization up to a vehicle that plans a route
+                    and obeys stop signs and traffic lights.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Course</span>
+                        EE 471 — Planning and Control for Autonomous
+                        Vehicles, Prof. Siavash Farzan
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        March – June 2026
+                    </div>
+                    <div>
+                        <span class="meta-label">Platform</span>
+                        Quanser QCar 2, simulation and hardware
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>Extended Kalman Filter</span>
+                    <span>Dead Reckoning</span>
+                    <span>Stanley Control</span>
+                    <span>PI Speed Control</span>
+                    <span>Camera Calibration</span>
+                    <span>LiDAR</span>
+                    <span>Occupancy Grids</span>
+                    <span>RGB-D Perception</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Attribution -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <div class="attribution">
+
+                    <h3>A note on authorship</h3>
+
+                    <p>
+                        This was structured coursework, not independent work.
+                        The course framework, starter code, and hardware
+                        interface classes were written by
+                        <strong>Prof. Siavash Farzan</strong> of the Cal Poly
+                        Electrical Engineering Department, who deserves credit
+                        for that material. Students filled in designated
+                        algorithm functions inside that scaffolding.
+                    </p>
+
+                    <p>
+                        What this page documents is therefore the
+                        <strong>topics I studied and the systems I got
+                        working</strong> — not a claim of having authored the
+                        surrounding codebase. The engineering understanding is
+                        mine; the framework it runs inside is his.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Topics -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Progression</p>
+
+                <h2>What the term covered.</h2>
+
+                <p class="section-intro">
+                    Each stage built on the one before, ending with a vehicle
+                    that drives a planned route under traffic law.
+                </p>
+
+                <div class="topic-grid">
+
+                    <div class="topic">
+                        <span class="topic-num">01</span>
+                        <h3>IMU interfacing and noise characterization</h3>
+                        <p>
+                            Reading the inertial sensor, characterizing its
+                            noise, and building a statistical model of it —
+                            the foundation everything downstream relies on.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <span class="topic-num">02</span>
+                        <h3>State estimation</h3>
+                        <p>
+                            Dead reckoning, then a GPS-aided extended Kalman
+                            filter with heading fusion, to hold a position
+                            estimate that does not drift.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <span class="topic-num">03</span>
+                        <h3>Speed and steering control</h3>
+                        <p>
+                            Longitudinal speed control paired with geometric
+                            steering control to track a reference path.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <span class="topic-num">04</span>
+                        <h3>Camera calibration and line detection</h3>
+                        <p>
+                            Calibrating the camera against a checkerboard
+                            target, then detecting lane lines from the
+                            corrected image.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <span class="topic-num">05</span>
+                        <h3>LiDAR mapping</h3>
+                        <p>
+                            Interpreting LiDAR returns to build occupancy grid
+                            maps of the environment around the vehicle.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <span class="topic-num">06</span>
+                        <h3>Perception-aware driving under traffic law</h3>
+                        <p>
+                            Bringing it together: detecting stop signs and
+                            traffic lights with range estimates, and behaving
+                            correctly in response.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Gallery -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Selected results</p>
+
+                <h2>The system working.</h2>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/qcar/occupancy-grid.png"
+                        alt="Occupancy grid map with obstacles in grey, showing the measured vehicle path in red closely following a green reference path around a rounded rectangular circuit."
+                        width="451"
+                        height="469"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        LiDAR-built occupancy grid with the driven path
+                        overlaid against the reference.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/qcar/traffic-detection.jpg"
+                        alt="Camera view of a lab track with a stop sign and traffic light, each outlined by a detection box labelled with its class and estimated distance."
+                        width="640"
+                        height="480"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Traffic-light and stop-sign detection with range
+                        estimates, running on the physical track.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/qcar/camera-calibration.jpg"
+                        alt="Simulated street view with a checkerboard calibration target, detected grid lines drawn in red and the recovered coordinate axes at the target centre."
+                        width="1349"
+                        height="1079"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Camera calibration against a checkerboard target, with
+                        the recovered pose axes drawn at its centre.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=6"></script>
+
+</body>
+</html>

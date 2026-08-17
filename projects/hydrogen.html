@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Green hydrogen grid stabilization - WERC Environmental Design Contest first place. Bench-scale embedded power-firming system built on Arduino, relays, MOSFETs, and digital potentiometers."
+    >
+
+    <title>Green Hydrogen Grid Stabilization | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=6">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Embedded Systems · Power Electronics · Energy Systems
+                </p>
+
+                <h1>Green Hydrogen Grid Stabilization</h1>
+
+                <p class="hero-text">
+                    A hydrogen-based energy storage concept for firming
+                    renewable generation — and the bench-scale embedded system
+                    that proved it, demonstrated at the WERC Environmental
+                    Design Contest.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Built the bench-scale embedded proof-of-concept
+                        demonstrated at the contest
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        September 2024 – April 2025
+                    </div>
+                    <div>
+                        <span class="meta-label">Outcome</span>
+                        1st Place, Task 2 Overall Design
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>Arduino</span>
+                    <span>Relay Switching</span>
+                    <span>N-MOSFET Drivers</span>
+                    <span>Digital Potentiometers</span>
+                    <span>MCP41010</span>
+                    <span>Electrolyzer</span>
+                    <span>Hydrogen Fuel Cell</span>
+                    <span>Power Firming</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Context -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">The concept</p>
+
+                <h2>Storing surplus renewable energy as hydrogen.</h2>
+
+                <p class="large-text">
+                    Solar generation peaks when demand does not. The proposal
+                    routes that surplus into an electrolyzer, stores the
+                    resulting hydrogen, and runs it back through a fuel cell
+                    when demand climbs — turning curtailed energy into
+                    dispatchable power.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/werc/concept.png"
+                        alt="Flow diagram: solar energy feeds an electrolyzer during low demand, hydrogen goes to storage, and a fuel cell returns power to the grid and homes during high demand."
+                        width="1044"
+                        height="431"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The plant-level concept — surplus solar to
+                        electrolyzer to hydrogen storage to fuel cell,
+                        dispatched back to the grid on demand.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    The team modelled the economics against real utility load
+                    data for El Paso Electric and Imperial Irrigation District,
+                    sizing hydrogen storage to the point where additional tanks
+                    stopped paying for themselves.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/werc/financial-impact.jpg"
+                        alt="Line chart of cumulative dollars over a year: money earned climbs steadily above money spent with and without storage, while money saved stays near zero."
+                        width="1295"
+                        height="638"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Modelled financial impact of the storage system over a
+                        year of utility load data.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Bench scale -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">What I built</p>
+
+                <h2>The bench-scale power-firming system.</h2>
+
+                <p class="large-text">
+                    My contribution was the physical proof of concept: an
+                    embedded system that holds a load steady while its solar
+                    input swings, and diverts genuine surplus into hydrogen
+                    production. This is the hardware that travelled to New
+                    Mexico State University and ran in front of the judges.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/werc/bench-schematic.png"
+                        alt="Electrical schematic of the bench-scale system: solar panel and Arduino Uno driving three SRD-05VDC relays via 2N2222A transistors, two MCP41010 digital potentiometers setting IRL3713 MOSFET gate voltages, plus electrolyzer, hydrogen fuel cell, status LEDs, a second Arduino, pushbuttons, and an LCD."
+                        width="969"
+                        height="561"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Full electrical schematic. Inputs in blue — solar panel,
+                        two pushbuttons, 9 V battery. Outputs in pink — the
+                        status LEDs, electrolyzer, and hydrogen fuel cell.
+                    </figcaption>
+                </figure>
+
+                <h3>How it regulates</h3>
+
+                <p>
+                    An Arduino Uno continuously monitors solar panel voltage
+                    across a 0–20 V range. Based on that reading it sets relay
+                    states and adjusts MCP41010 digital potentiometers, which in
+                    turn set the gate voltages on IRL3713 N-channel MOSFETs to
+                    regulate current flow. Relays act as the coarse switches;
+                    the digital potentiometers do the fine control.
+                </p>
+
+                <h3>Four operating cases</h3>
+
+                <ul class="case-list">
+                    <li>
+                        <strong>Insufficient solar.</strong> Solar path relays
+                        open, battery relay closed — the load runs entirely from
+                        storage.
+                    </li>
+                    <li>
+                        <strong>Partial solar.</strong> Solar and battery relays
+                        both closed — the load is supplied from both sources
+                        simultaneously.
+                    </li>
+                    <li>
+                        <strong>Optimal solar.</strong> Only the solar relay
+                        closed — the load runs directly off the panel with no
+                        draw on storage.
+                    </li>
+                    <li>
+                        <strong>Excess solar.</strong> Surplus is diverted to an
+                        electrolyzer, splitting deionized water into hydrogen
+                        and oxygen. The hydrogen feeds a fuel cell that
+                        recombines it with atmospheric oxygen to produce water
+                        and electricity.
+                    </li>
+                </ul>
+
+                <p>
+                    Through the first three cases the digital potentiometers
+                    hold MOSFET gate voltages statically, limiting current to
+                    protect the components. In the surplus case they modulate
+                    dynamically, keeping load power stable while the solar input
+                    varies. A pair of pushbuttons and an LCD let an operator see
+                    live generation against demand and vary the demand level,
+                    so the demonstration responds to realistic conditions rather
+                    than a fixed script.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recognition -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Recognition</p>
+
+                <h2>Outcome.</h2>
+
+                <div class="project-highlight">
+                    1st Place — WERC Environmental Design Contest, Task 2
+                    Overall Design, New Mexico State University
+                </div>
+
+                <div class="project-highlight">
+                    Published in IEEE Xplore — “Sustainable Grid Stabilization
+                    Via Green Hydrogen Technologies”
+                </div>
+
+                <div class="link-row">
+                    <a
+                        class="button secondary"
+                        href="https://ieeexplore.ieee.org/document/11143791"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        View the publication on IEEE Xplore
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=6"></script>
+
+</body>
+</html>
