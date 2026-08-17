@@ -1,0 +1,10 @@
+# OneDrive / OS artifacts
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# files/ is served publicly on dantebenedetti.com, so nothing lands there by
+# accident. Only the published resume is tracked; add new public downloads
+# here explicitly with their own negation line.
+files/*
+!files/Dante_Benedetti_Resume.pdf
