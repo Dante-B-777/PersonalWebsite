@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Autonomous vision-based litter collection rover - senior project integrating ROS 2, YOLO detection, LiDAR SLAM, Theta* path planning, and STM32 real-time control."
+    >
+
+    <title>Litter Collection Rover | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=4">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Project hero -->
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Autonomous Robotics · Computer Vision · Embedded Systems
+                </p>
+
+                <h1>Autonomous Vision-Based Litter Collection Rover</h1>
+
+                <p class="hero-text">
+                    A three-person senior project (EE 460/463/464) at Cal Poly
+                    San Luis Obispo: a rover that detects, approaches, and
+                    collects ground-level litter without human input.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Autonomy, controls, and embedded integration
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        September 2025 – June 2026
+                    </div>
+                    <div>
+                        <span class="meta-label">Team</span>
+                        Three engineers
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>ROS 2</span>
+                    <span>STM32L4A6ZG</span>
+                    <span>Jetson Orin Nano</span>
+                    <span>YOLO</span>
+                    <span>LiDAR SLAM</span>
+                    <span>EKF</span>
+                    <span>Theta*</span>
+                    <span>Pure Pursuit</span>
+                    <span>Mecanum Drive</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Headline results -->
+        <section class="section results-section">
+
+            <div class="container">
+
+                <p class="section-label">Results</p>
+
+                <h2>What the system achieved.</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <span class="stat-value">0.033 m</span>
+                        <span class="stat-label">
+                            Mean cross-track error during nominal
+                            path following
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">0.059 m</span>
+                        <span class="stat-label">
+                            Mean cross-track error while avoiding
+                            obstacles
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">
+                            Collection success rate for plastic
+                            bottles
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">~12,700</span>
+                        <span class="stat-label">
+                            Training images behind the YOLO litter
+                            detector
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Overview -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Overview</p>
+
+                <h2>How it works.</h2>
+
+                <p class="large-text">
+                    The rover integrates autonomy, computer vision, embedded
+                    real-time control, mecanum-wheel omnidirectional mobility,
+                    and a two-degree-of-freedom robotic arm to detect,
+                    approach, and collect small ground-level litter such as
+                    bottles, wrappers, and paper fragments.
+                </p>
+
+                <h3>Two-layer compute architecture</h3>
+
+                <p>
+                    Perception, SLAM, and path planning run on an NVIDIA Jetson
+                    Orin Nano under ROS 2. Real-time motor control and odometry
+                    run on an STM32L4A6ZG microcontroller. Splitting the system
+                    this way keeps the hard real-time control loop deterministic
+                    while leaving the compute-heavy perception stack free to run
+                    at its own cadence.
+                </p>
+
+                <h3>Perception and navigation</h3>
+
+                <p>
+                    A YOLO-based detector trained on roughly 12,700 images
+                    locates litter in the RGB-D camera stream and projects each
+                    detection into the map frame. A custom Theta* planner
+                    generates paths to each target, and a pure-pursuit
+                    controller tracks them while an EKF fuses wheel odometry
+                    with LiDAR-based localization.
+                </p>
+
+                <h3>Mechanical platform</h3>
+
+                <p>
+                    The robot is built on a multi-level aluminum frame with a
+                    3D-printed collection ramp, machined sensor mounts, and
+                    custom electronics housings. The completed platform weighs
+                    approximately 42 lb.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Gallery -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Gallery</p>
+
+                <h2>The build, the data, and the system running.</h2>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/litterbot/prototype.jpg"
+                        alt="Completed LitterBot prototype on grass, showing the aluminum frame, mecanum wheels, depth camera mast, LiDAR, and 3D-printed collection ramp."
+                        width="747"
+                        height="778"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The completed prototype, with integrated drive,
+                        collection, sensing, and control subsystems.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/litterbot/path-tracking.png"
+                        alt="Six-panel plot of autonomy path tracking: XY planned versus actual path, cross-track error over time, heading error, cross-track error versus path position, and commanded linear and angular velocities."
+                        width="1264"
+                        height="1167"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Path-tracking performance during a live autonomy run:
+                        planned versus actual trajectory, cross-track and
+                        heading error, and commanded velocities.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/litterbot/command-center.jpg"
+                        alt="LitterBot Command Center interface showing live YOLO litter detections with confidence scores and distances, a LiDAR scan, odometry readouts, and serial traffic between the Jetson and STM32."
+                        width="844"
+                        height="844"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The Command Center monitoring an autonomous run — live
+                        YOLO detections with range estimates, LiDAR returns,
+                        odometry, and Jetson/STM32 serial traffic.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Video -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Demonstrations</p>
+
+                <h2>Autonomous runs.</h2>
+
+                <p class="section-intro">
+                    Two-item collection trajectories, recorded from both the
+                    robot's own interface and from the floor.
+                </p>
+
+                <div class="video-grid">
+
+                    <figure class="video-figure">
+                        <div class="video-frame">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/EIHyWfRen9A"
+                                title="LitterBot Run 1 - two item trajectory with obstacle, live footage"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                        <figcaption>
+                            Run 1 — two-item trajectory with an obstacle, live.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="video-figure">
+                        <div class="video-frame">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/cPLhsfcqaT0"
+                                title="LitterBot Run 1 - two item trajectory with obstacle, interface view"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                        <figcaption>
+                            The same run from the Command Center interface.
+                        </figcaption>
+                    </figure>
+
+                </div>
+
+                <details class="more-videos">
+
+                    <summary>More recorded runs</summary>
+
+                    <ul>
+                        <li>
+                            <a href="https://youtu.be/wuPBiPrMTJ4" target="_blank" rel="noopener">
+                                Run 1 — two-item trajectory, no obstacle (live)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/xJT2ZUeigI8" target="_blank" rel="noopener">
+                                Run 1 — two-item trajectory, no obstacle (interface)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/m4AevvASR3k" target="_blank" rel="noopener">
+                                Run 2 — two-item trajectory with obstacle (interface)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/Bzz7ScIDNos" target="_blank" rel="noopener">
+                                Run 2 — two-item trajectory, no obstacle (interface)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/nTEywUycqD4" target="_blank" rel="noopener">
+                                Run 2 — two-item trajectory, no obstacle (interface, alternate)
+                            </a>
+                        </li>
+                    </ul>
+
+                </details>
+
+            </div>
+
+        </section>
+
+
+        <!-- Further reading -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Documentation</p>
+
+                <h2>Go deeper.</h2>
+
+                <div class="link-row">
+
+                    <a
+                        class="button secondary"
+                        href="https://github.com/benjam1ntavares/LitterBot_Official"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Source code on GitHub
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <p>
+                © 2026 Dante Benedetti
+            </p>
+
+            <p>
+                dantebenedetti.com
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="../js/main.js?v=4"></script>
+
+</body>
+</html>
