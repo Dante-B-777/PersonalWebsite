@@ -74,6 +74,35 @@ nav a:hover {
     opacity: 0.55;
 }
 
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.nav-toggle-bar {
+    width: 24px;
+    height: 2px;
+    background: #151515;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 
 /* =========================================================
    HERO
@@ -547,8 +576,35 @@ footer {
 
 @media (max-width: 750px) {
 
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
     nav {
         display: none;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        padding-bottom: 10px;
+        border-top: 1px solid #e8e8e8;
+    }
+
+    nav.open {
+        display: flex;
+    }
+
+    nav a {
+        padding: 14px 2px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 1rem;
+    }
+
+    nav a:last-child {
+        border-bottom: 0;
     }
 
     .hero {

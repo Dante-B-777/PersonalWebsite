@@ -11,7 +11,7 @@
 
     <title>Dante Benedetti | Electrical Engineering Portfolio</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 
 <body>
@@ -22,7 +22,19 @@
 
             <a class="logo" href="#">Dante Benedetti</a>
 
-            <nav>
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
                 <a href="#education">Education</a>
@@ -722,13 +734,18 @@
                         Email
                     </a>
 
-                    <a href="#" target="_blank">
+                    <a
+                        href="https://www.linkedin.com/in/dante-m-benedetti"
+                        target="_blank"
+                        rel="noopener"
+                    >
                         LinkedIn
                     </a>
 
                     <a
                         href="https://github.com/Dante-B-777"
                         target="_blank"
+                        rel="noopener"
                     >
                         GitHub
                     </a>
@@ -766,7 +783,7 @@
     </footer>
 
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=2"></script>
 
 </body>
 </html>
