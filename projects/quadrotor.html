@@ -11,7 +11,7 @@
 
     <title>Quadrotor Flight Controller | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=9">
+    <link rel="stylesheet" href="../css/style.css?v=10">
 </head>
 
 <body>
@@ -112,10 +112,10 @@
 
                     <figure class="project-figure">
                         <img
-                            src="../images/drone/airframe.jpg"
-                            alt="Top-down view of the 232 mm quadrotor: carbon arms, four brushless motors with tri-blade propellers, a LiPo battery strapped to a perfboard deck, and an IMU breakout board."
-                            width="1600"
-                            height="1200"
+                            src="../images/drone/isometric.jpg"
+                            alt="Angled view of the assembled 232 mm quadrotor resting on decking, showing the carbon arms, four motors with tri-blade propellers, and the battery and electronics deck."
+                            width="1200"
+                            height="1600"
                             loading="lazy"
                         >
                         <figcaption>
@@ -185,6 +185,21 @@ tilt → body rate → angular acceleration → torque
                     positions and spin directions by summing r × F, so a sign
                     error in the mixer would have to be a geometry error first.
                 </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/drone/rotor-layout.jpg"
+                        alt="Top view of the bare airframe with each arm labelled in tape showing its rotor number and spin direction, alongside the flight electronics and sensor breakout boards."
+                        width="1600"
+                        height="1200"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Rotor numbering and spin direction marked on each arm —
+                        the geometry the allocator derives its mixing matrix
+                        from.
+                    </figcaption>
+                </figure>
 
                 <h3>Drag torque identified in flight</h3>
 
@@ -305,7 +320,7 @@ tilt → body rate → angular acceleration → torque
     </footer>
 
 
-    <script src="../js/main.js?v=9"></script>
+    <script src="../js/main.js?v=10"></script>
 
 </body>
 </html>
