@@ -1115,3 +1115,42 @@ footer {
         transition: none;
     }
 }
+
+/* =========================================================
+   HERO PORTRAIT
+   ========================================================= */
+
+.hero-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 56px;
+}
+
+.hero-portrait {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.hero-portrait img {
+    width: clamp(180px, 20vw, 260px);
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 18px 44px rgba(18, 21, 28, 0.18);
+}
+
+@media (max-width: 880px) {
+    .hero-split {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .hero-portrait {
+        order: -1;
+    }
+
+    .hero-portrait img {
+        width: 150px;
+    }
+}
