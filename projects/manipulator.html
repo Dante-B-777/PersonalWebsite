@@ -11,7 +11,7 @@
 
     <title>Vision-Based Robotic Manipulator | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=10">
+    <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 
 <body>
@@ -151,6 +151,28 @@
                     <li><strong>Sort</strong> it into the matching colour-coded bin.</li>
                 </ul>
 
+                <h3>How the rig is set up</h3>
+
+                <p>
+                    The camera is not mounted on the arm. It sits on a separate
+                    stand, propped above the workspace and aimed down at the
+                    arm's stand and the board in front of it — an eye-to-hand
+                    configuration, where the camera watches the robot rather
+                    than moving with it. That fixed vantage is what makes the
+                    AprilTag calibration meaningful: once the transform between
+                    camera frame and robot base frame is solved, it stays valid
+                    for the whole run.
+                </p>
+
+                <p>
+                    Both the camera and the arm are wired back to the same
+                    laptop. The laptop runs the perception and planning code,
+                    pulls RGB-D frames from the camera over USB, and drives the
+                    arm's controller over its own serial link — so the full
+                    perceive-plan-act loop closes on the host machine rather
+                    than on any embedded controller.
+                </p>
+
                 <p>
                     The earlier labs in the course built each piece separately —
                     communication and position control, forward and inverse
@@ -286,7 +308,7 @@
     </footer>
 
 
-    <script src="../js/main.js?v=10"></script>
+    <script src="../js/main.js?v=13"></script>
 
 </body>
 </html>

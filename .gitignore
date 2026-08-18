@@ -9,6 +9,8 @@ Thumbs.db
 files/*
 !files/Dante_Benedetti_Resume.pdf
 !files/LitterBot_Final_Report.pdf
+!files/SteadiFly_Report.pdf
+!files/SteadiFly_Source.zip
 
 # Raw camera video: 1080p60 originals are 100-270MB, over GitHub's
 # 100MB per-file limit. Transcoded, audio-stripped copies are committed

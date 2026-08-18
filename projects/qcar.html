@@ -11,7 +11,7 @@
 
     <title>Perception-Aware Autonomous Vehicle | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=10">
+    <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 
 <body>
@@ -153,9 +153,13 @@
                         <span class="topic-num">01</span>
                         <h3>IMU interfacing and noise characterization</h3>
                         <p>
-                            Reading the inertial sensor, characterizing its
-                            noise, and building a statistical model of it —
-                            the foundation everything downstream relies on.
+                            Reading the inertial sensor over its interface,
+                            logging it at rest, and characterizing what the
+                            signal does when nothing is moving. The gyroscope
+                            has a bias that drifts and a random walk on top of
+                            it; quantifying both as a statistical model is what
+                            lets a filter downstream decide how much to trust
+                            the sensor versus its own prediction.
                         </p>
                     </div>
 
@@ -163,9 +167,13 @@
                         <span class="topic-num">02</span>
                         <h3>State estimation</h3>
                         <p>
-                            Dead reckoning, then a GPS-aided extended Kalman
-                            filter with heading fusion, to hold a position
-                            estimate that does not drift.
+                            Dead reckoning integrates wheel odometry and
+                            heading forward, which works briefly and then
+                            drifts without bound. The extended Kalman filter
+                            fixes that by predicting with the motion model and
+                            correcting against GPS, linearizing the non-linear
+                            model at each step. Fusing a separate heading
+                            measurement keeps yaw from being the weak axis.
                         </p>
                     </div>
 
@@ -173,8 +181,14 @@
                         <span class="topic-num">03</span>
                         <h3>Speed and steering control</h3>
                         <p>
-                            Longitudinal speed control paired with geometric
-                            steering control to track a reference path.
+                            Two loops that do not talk to each other. A PI
+                            controller regulates speed against a reference,
+                            integrating away the steady-state error a
+                            proportional term alone leaves behind. Steering is
+                            geometric — the Stanley controller drives both the
+                            heading error and the cross-track error of the
+                            front axle to zero, which is what keeps the car on
+                            the line rather than merely parallel to it.
                         </p>
                     </div>
 
@@ -182,9 +196,12 @@
                         <span class="topic-num">04</span>
                         <h3>Camera calibration and line detection</h3>
                         <p>
-                            Calibrating the camera against a checkerboard
-                            target, then detecting lane lines from the
-                            corrected image.
+                            A camera lens bends straight lines, so the first
+                            job is recovering the intrinsics and distortion
+                            coefficients from a checkerboard of known geometry.
+                            Only once the image is undistorted does line
+                            detection mean anything — a lane edge found in a
+                            warped frame maps to the wrong place in the world.
                         </p>
                     </div>
 
@@ -192,8 +209,12 @@
                         <span class="topic-num">05</span>
                         <h3>LiDAR mapping</h3>
                         <p>
-                            Interpreting LiDAR returns to build occupancy grid
-                            maps of the environment around the vehicle.
+                            Raw LiDAR gives ranges and bearings; an occupancy
+                            grid turns them into a map the planner can use.
+                            Each scan marks cells along a ray as free and the
+                            cell at the return as occupied, accumulated over
+                            time so noise averages out and the static structure
+                            of the room emerges.
                         </p>
                     </div>
 
@@ -201,9 +222,11 @@
                         <span class="topic-num">06</span>
                         <h3>Perception-aware driving under traffic law</h3>
                         <p>
-                            Bringing it together: detecting stop signs and
-                            traffic lights with range estimates, and behaving
-                            correctly in response.
+                            Everything above, plus the rules. Detections carry
+                            a class and a range, and a finite-state machine
+                            decides what to do with them — approach, slow,
+                            stop, wait, proceed — so the car obeys a stop sign
+                            and a red light instead of merely noticing them.
                         </p>
                     </div>
 
@@ -281,6 +304,10 @@
 
                 <p class="section-intro">
                     End-to-end runs in simulation and on the physical track.
+                    Simulation lets the planner and finite-state machine be
+                    exercised safely and repeatably; the physical runs are
+                    where sensor noise, tyre slip, and lighting stop being
+                    theoretical.
                 </p>
 
                 <div class="video-grid">
@@ -351,7 +378,7 @@
     </footer>
 
 
-    <script src="../js/main.js?v=10"></script>
+    <script src="../js/main.js?v=13"></script>
 
 </body>
 </html>

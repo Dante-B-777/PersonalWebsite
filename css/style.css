@@ -1,4 +1,19 @@
 /* =========================================================
+   TOKENS
+   ========================================================= */
+
+:root {
+    --ink: #12151c;
+    --muted: #5b6472;
+    --line: #e4e7ec;
+    --paper: #ffffff;
+    --wash: #f5f7fa;
+    --accent: #1a56db;
+    --accent-2: #0ea5a5;
+    --accent-soft: #eef3ff;
+}
+
+/* =========================================================
    GLOBAL
    ========================================================= */
 
@@ -12,10 +27,12 @@ html {
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #151515;
-    background: #ffffff;
-    line-height: 1.6;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Inter,
+        Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -70,8 +87,24 @@ nav a {
     transition: opacity 0.2s ease;
 }
 
-nav a:hover {
-    opacity: 0.55;
+nav a {
+    position: relative;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 0.25s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
 }
 
 .nav-toggle {
@@ -109,10 +142,15 @@ nav a:hover {
    ========================================================= */
 
 .hero {
+    position: relative;
     min-height: 78vh;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+        radial-gradient(900px 460px at 12% -10%, var(--accent-soft), transparent 60%),
+        radial-gradient(760px 420px at 92% 8%, #e6fbfa, transparent 62%);
 }
 
 .hero-content {
@@ -123,9 +161,20 @@ nav a:hover {
 .section-label,
 .project-type {
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    font-size: 0.75rem;
     font-weight: 700;
+    color: var(--accent);
+}
+
+.section-label::after {
+    content: "";
+    display: block;
+    width: 34px;
+    height: 3px;
+    margin-top: 9px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
 .hero h1 {
@@ -133,6 +182,10 @@ nav a:hover {
     font-size: clamp(3rem, 8vw, 6rem);
     line-height: 1;
     letter-spacing: -0.04em;
+    background: linear-gradient(100deg, var(--ink) 30%, var(--accent) 75%, var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .hero-text {
@@ -175,13 +228,23 @@ nav a:hover {
 }
 
 .primary {
-    background: #111;
+    background: linear-gradient(120deg, var(--accent), #3f7bee);
     color: #fff;
+    box-shadow: 0 6px 18px rgba(26, 86, 219, 0.28);
+}
+
+.primary:hover {
+    box-shadow: 0 12px 26px rgba(26, 86, 219, 0.34);
 }
 
 .secondary {
-    border: 1px solid #ccc;
+    border: 1px solid var(--line);
     background: #fff;
+}
+
+.secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 
@@ -194,7 +257,7 @@ nav a:hover {
 }
 
 .alt-section {
-    background: #f7f7f7;
+    background: var(--wash);
 }
 
 .section h2 {
@@ -245,9 +308,28 @@ nav a:hover {
         box-shadow 0.2s ease;
 }
 
+.project-card {
+    position: relative;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 2;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
 .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(18, 21, 28, 0.11);
 }
 
 .project-image {
@@ -301,19 +383,21 @@ nav a:hover {
 }
 
 .project-tags span {
-    padding: 5px 9px;
-    border-radius: 5px;
-    background: #f0f0f0;
-    color: #444;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid #dbe4f7;
+    background: var(--accent-soft);
+    color: #24439c;
     font-size: 0.76rem;
     font-weight: 600;
 }
 
 .project-highlight {
     margin-top: 12px;
-    padding: 10px 12px;
-    border-left: 3px solid #111;
-    background: #f5f5f5;
+    padding: 12px 14px;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    background: var(--accent-soft);
     font-size: 0.9rem;
 }
 
@@ -731,14 +815,24 @@ footer {
 
 .stat {
     padding: 26px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
     background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(18, 21, 28, 0.08);
 }
 
 .stat-value {
     display: block;
     margin-bottom: 8px;
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     font-size: clamp(1.7rem, 3vw, 2.3rem);
     font-weight: 700;
     line-height: 1.1;
@@ -767,18 +861,23 @@ footer {
 }
 
 .project-figure img {
-    width: 100%;
+    display: block;
+    width: auto;
+    max-width: 100%;
     height: auto;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    max-height: 33vh;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
     background: #fff;
 }
 
 .project-figure figcaption {
     margin-top: 12px;
-    color: #666;
+    color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.5;
+    text-align: center;
 }
 
 .video-grid {
@@ -899,9 +998,16 @@ footer {
 
 .topic {
     padding: 26px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
     background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.topic:hover {
+    transform: translateY(-3px);
+    border-color: #c9d8f6;
+    box-shadow: 0 12px 26px rgba(18, 21, 28, 0.08);
 }
 
 .topic-num {
@@ -910,7 +1016,7 @@ footer {
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #999;
+    color: var(--accent);
 }
 
 .topic h3 {
@@ -976,8 +1082,36 @@ footer {
 .project-figure video {
     width: 100%;
     height: auto;
-    max-height: 78vh;
-    border: 1px solid #ddd;
+    max-height: 55vh;
+    width: auto;
+    border: 1px solid var(--line);
     border-radius: 10px;
     background: #000;
+}
+
+
+/* =========================================================
+   MOTION
+   ========================================================= */
+
+/* Hidden only once JS has confirmed it can reveal them again. Without the
+   js-reveal flag on <html>, everything renders normally. */
+.js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-reveal .reveal,
+    .js-reveal .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }

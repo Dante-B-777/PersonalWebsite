@@ -11,7 +11,7 @@
 
     <title>Quadrotor Flight Controller | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=10">
+    <link rel="stylesheet" href="../css/style.css?v=13">
 </head>
 
 <body>
@@ -113,30 +113,31 @@
                     <figure class="project-figure">
                         <img
                             src="../images/drone/isometric.jpg"
-                            alt="Angled view of the assembled 232 mm quadrotor resting on decking, showing the carbon arms, four motors with tri-blade propellers, and the battery and electronics deck."
-                            width="1200"
-                            height="1600"
+                            alt="Side view of the assembled quadrotor: stacked carbon decks with the flight electronics between them, a 1300 mAh 4S LiPo strapped on top, XT60 power lead, and four motors on tri-blade propellers."
+                            width="1553"
+                            height="1164"
                             loading="lazy"
                         >
                         <figcaption>
-                            The 232 mm airframe — four brushless motors on
-                            5-inch tri-blade props, with the flight electronics
-                            and IMU on a perfboard deck.
+                            Side profile — the stacked deck layout puts the
+                            power wiring below and the battery on top, with the
+                            flight electronics sandwiched between.
                         </figcaption>
                     </figure>
 
                     <figure class="project-figure">
                         <img
                             src="../images/drone/transmitter.jpg"
-                            alt="Edge-on view of the custom transmitter: a flat white deck with two analogue gimbals, a control PCB underneath, and a battery pack taped to the top."
+                            alt="Head-on view of the custom transmitter: an ESP32 development board wired on a breadboard between two analogue thumbstick gimbals sitting along the lower edge, with red and blue pushbuttons."
                             width="1600"
                             height="1200"
                             loading="lazy"
                         >
                         <figcaption>
-                            The matching transmitter, also built for the
-                            project — four real analogue axes with calibration
-                            stored in NVS.
+                            The matching transmitter — an ESP32 reading two
+                            analogue gimbals for four axes, with calibration
+                            stored in NVS so stick centres survive a power
+                            cycle.
                         </figcaption>
                     </figure>
 
@@ -147,8 +148,71 @@
         </section>
 
 
-        <!-- Architecture -->
+        <!-- Components -->
         <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Hardware</p>
+
+                <h2>What is on the airframe, and how it fits together.</h2>
+
+                <p class="large-text">
+                    The stack is deliberately layered. Power enters at the
+                    bottom, computation sits in the middle, and the battery
+                    rides on top where its mass stays near the centre of the
+                    frame — which keeps the inertia the controller models close
+                    to the inertia it actually has.
+                </p>
+
+                <ul class="case-list">
+                    <li>
+                        <strong>Power.</strong> A 1300 mAh 4S LiPo feeds the
+                        frame through an XT60 lead into the distribution layer,
+                        which fans out to the four electronic speed
+                        controllers.
+                    </li>
+                    <li>
+                        <strong>Propulsion.</strong> Four brushless motors on
+                        5-inch tri-blade propellers, two spinning clockwise and
+                        two counter-clockwise so their reaction torques cancel
+                        in level flight. Each ESC talks bidirectional DShot, so
+                        the same wire that carries the command carries measured
+                        RPM back.
+                    </li>
+                    <li>
+                        <strong>Sensing.</strong> An IMU supplies angular rate
+                        and specific force; a magnetometer anchors heading; a
+                        downward optical-flow sensor measures translation over
+                        the ground; a time-of-flight rangefinder supplies
+                        height. No single one of those is sufficient, which is
+                        why they are fused rather than used directly.
+                    </li>
+                    <li>
+                        <strong>Compute and link.</strong> The flight
+                        controller runs the estimator and the full control
+                        cascade, and talks to the hand-built transmitter over a
+                        low-latency ESP-NOW link that also carries telemetry
+                        back to a laptop for logging.
+                    </li>
+                </ul>
+
+                <p>
+                    The integration point that matters most is the RPM
+                    feedback. Because the ESCs report actual rotor speed, the
+                    controller can treat each rotor as a closed-loop actuator
+                    with a known output rather than an open-loop throttle whose
+                    real behaviour depends on battery sag, propeller loading,
+                    and temperature.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Architecture -->
+        <section class="section">
 
             <div class="container narrow">
 
@@ -168,6 +232,43 @@ tilt → body rate → angular acceleration → torque
 (thrust, torque) → RotorAllocator → per-rotor ω setpoint
 ω setpoint → RotorSpeedLoop (closed on RPM) → DShot</pre>
 
+                <h3>Why rotor angular velocity, and not throttle</h3>
+
+                <p>
+                    A conventional flight controller ends its cascade at a
+                    throttle value per motor — a duty cycle handed to an ESC in
+                    the hope that it produces the intended thrust. That hope is
+                    the problem. Thrust from a propeller goes roughly as the
+                    square of its angular velocity, and the mapping from
+                    throttle to angular velocity is not fixed: it sags as the
+                    battery drains, shifts with air density, and changes as the
+                    propeller loads up in fast descent. A controller tuned at
+                    full charge is a differently tuned controller at
+                    half charge.
+                </p>
+
+                <p>
+                    Commanding angular velocity instead removes that
+                    uncertainty. The allocator converts the desired thrust and
+                    three-axis torque into four rotor speed setpoints using the
+                    airframe's geometry, and each rotor then runs its own
+                    closed loop against the RPM the ESC reports back over
+                    bidirectional DShot. Battery sag becomes a disturbance the
+                    inner loop rejects rather than a gain error the outer loops
+                    never learn about.
+                </p>
+
+                <p>
+                    The practical payoff is that every quantity above the
+                    allocator stays in physical units. The attitude loop asks
+                    for a torque in newton-metres, the position loop asks for a
+                    thrust in newtons, and the allocator is the single place
+                    where physics turns into actuator commands. When yaw
+                    authority was wrong, that separation is what made the fault
+                    findable: the torque request was correct and the mapping
+                    beneath it was not.
+                </p>
+
                 <h3>Conventions live in one file</h3>
 
                 <p>
@@ -185,21 +286,6 @@ tilt → body rate → angular acceleration → torque
                     positions and spin directions by summing r × F, so a sign
                     error in the mixer would have to be a geometry error first.
                 </p>
-
-                <figure class="project-figure wide">
-                    <img
-                        src="../images/drone/rotor-layout.jpg"
-                        alt="Top view of the bare airframe with each arm labelled in tape showing its rotor number and spin direction, alongside the flight electronics and sensor breakout boards."
-                        width="1600"
-                        height="1200"
-                        loading="lazy"
-                    >
-                    <figcaption>
-                        Rotor numbering and spin direction marked on each arm —
-                        the geometry the allocator derives its mixing matrix
-                        from.
-                    </figcaption>
-                </figure>
 
                 <h3>Drag torque identified in flight</h3>
 
@@ -320,7 +406,7 @@ tilt → body rate → angular acceleration → torque
     </footer>
 
 
-    <script src="../js/main.js?v=10"></script>
+    <script src="../js/main.js?v=13"></script>
 
 </body>
 </html>
