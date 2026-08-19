@@ -11,7 +11,7 @@
 
     <title>Quadrotor Flight Controller | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=14">
+    <link rel="stylesheet" href="../css/style.css?v=15">
 </head>
 
 <body>
@@ -395,6 +395,286 @@ tilt → body rate → angular acceleration → torque
 
         </section>
 
+
+        <!-- Remote control -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Remote control</p>
+
+                <h2>Flown by hand from the transmitter.</h2>
+
+                <p class="section-intro">
+                    A single 26-second flight, flown free-hand on the sticks.
+                    No waypoint list, no autonomous mode &mdash; the transmitter
+                    stick positions are logged on the same clock as the
+                    estimator and the controller, so every command can be traced
+                    through the cascade to what the aircraft actually did. In
+                    this run only heading is held to a setpoint; altitude and
+                    horizontal position are the pilot's, which is why position
+                    and heading tracking error are not meaningful numbers here.
+                </p>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/drone/control-chain-overview.png"
+                        alt="Six stacked time plots over 26 seconds: normalised RC stick input for roll, pitch and throttle; body-frame velocity along X and along Y with commanded target against measured; roll and pitch angle with commanded against measured; and altitude."
+                        width="1411"
+                        height="1609"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The whole chain on one clock. Stick deflection at the
+                        top, the body-frame velocity it asks for below that, the
+                        tilt the controller chose in order to get that velocity,
+                        and altitude at the bottom. Reading straight down a
+                        column at any instant is reading the cascade.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+            <div class="container narrow">
+
+                <h3>A stick deflection is a velocity request, not a tilt</h3>
+
+                <p>
+                    The sticks never command an angle. Roll and pitch map to a
+                    body-frame velocity setpoint of up to roughly &plusmn;0.5 m/s
+                    at full deflection, and the velocity loop decides what tilt
+                    is needed to produce it. Tilt is the means, not the command
+                    &mdash; which is why the velocity traces are smooth while the
+                    angle traces underneath them are busy. The attitude loop is
+                    continuously chasing whatever tilt the current velocity error
+                    demands.
+                </p>
+
+                <p>
+                    Because the body frame is +X right, +Y forward, +Z up, the
+                    two channels split cleanly: the roll stick rolls the aircraft
+                    about its forward axis and moves it along &plusmn;X, right
+                    and left; the pitch stick pitches it about its right-hand
+                    axis and moves it along &plusmn;Y, forward and back.
+                </p>
+
+            </div>
+
+            <div class="container">
+
+                <div class="two-up">
+
+                    <figure class="project-figure plot">
+                        <img
+                            src="../images/drone/cascade-roll.png"
+                            alt="Five stacked plots titled ROLL about +Y: stick position, body velocity target against measured, roll angle target against measured, body roll rate target against measured, and commanded roll torque."
+                            width="699"
+                            height="1183"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            <strong>Roll &rarr; sideways.</strong> Each full
+                            stick step asks for about &plusmn;0.5 m/s along body
+                            X, and the measured velocity gets there in roughly
+                            half a second. The angle panel below is the tilt the
+                            loop picked to do it &mdash; a few degrees, peaking
+                            near &plusmn;6&deg;. Roll torque stays centred on
+                            zero.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="project-figure plot">
+                        <img
+                            src="../images/drone/cascade-pitch.png"
+                            alt="Five stacked plots titled PITCH about +X: stick position, body velocity target against measured, pitch angle target against measured, body pitch rate target against measured, and commanded pitch torque."
+                            width="689"
+                            height="1183"
+                            loading="lazy"
+                        >
+                        <figcaption>
+                            <strong>Pitch &rarr; forward and back.</strong> Same
+                            structure along body Y, and the same half-second
+                            rise. The difference worth noticing is the bottom
+                            panel: pitch torque sits at a small positive bias
+                            rather than centred on zero, consistent with a
+                            fore&ndash;aft mass offset that the attitude loop
+                            trims out on every sample.
+                        </figcaption>
+                    </figure>
+
+                </div>
+
+            </div>
+
+            <div class="container narrow">
+
+                <h3>The circle is hand-flown, not planned</h3>
+
+                <p>
+                    There is no circular trajectory anywhere in the firmware.
+                    The loop in the ground track is what comes out of driving
+                    the two sticks in quadrature by hand &mdash; roll right while
+                    easing pitch forward, then pitch back as the roll comes off.
+                    A circle fitted to the flown path lands at 0.542 m radius
+                    with 0.076 m rms residual, which measures how steady the
+                    pilot was rather than how well a controller tracked
+                    anything.
+                </p>
+
+                <p>
+                    The panel on the right is the part that says the vehicle
+                    works. Every stick step produces a body-velocity response of
+                    the right sign and roughly the right magnitude, on both axes
+                    simultaneously, and the two axes stay decoupled while the
+                    aircraft is rotating through the turn.
+                </p>
+
+            </div>
+
+            <div class="container">
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/drone/circle-ground-track.png"
+                        alt="Left: an overhead plot of the flown path forming a rough closed loop about one metre across, with a fitted circle of radius 0.542 metres overlaid. Right: roll and pitch stick position plotted against measured body velocity along X and Y over the same 26 seconds."
+                        width="1420"
+                        height="626"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Left, the ground track as the estimator saw it, against a
+                        circle fitted to it. Right, the two sticks against the two
+                        body-velocity components they drive &mdash; the phase
+                        offset between the roll and pitch channels is what turns
+                        the flight into a circle.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+            <div class="container narrow">
+
+                <h3>Altitude converges on what the rangefinder measures</h3>
+
+                <p>
+                    The first four seconds are a real hold command: 0.5 m,
+                    commanded from the ground, and the aircraft climbs onto it
+                    and settles. After that the throttle stick is in the pilot's
+                    hand and the dashed commanded trace vanishes underneath the
+                    solid measured one &mdash; with throttle active the setpoint
+                    is continuously re-anchored to the estimated height, so
+                    letting go of the stick leaves the aircraft holding whatever
+                    altitude it had reached. Commanded and measured differ by
+                    0.085 m rms across the whole run, and nearly all of that is
+                    the opening climb.
+                </p>
+
+            </div>
+
+            <div class="container">
+
+                <figure class="project-figure plot">
+                    <img
+                        src="../images/drone/rc-altitude-hold.png"
+                        alt="Altitude in metres over 26 seconds: a dashed commanded trace at 0.5 metres for the first few seconds with the measured altitude climbing to meet it, after which the two traces coincide as altitude wanders between 0.25 and 0.85 metres. Annotation reads rms err 0.085."
+                        width="712"
+                        height="340"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Dashed is commanded, solid is the fused estimate. They
+                        are the same curve after the opening climb, which is what
+                        an altitude setpoint slaved to the measurement looks
+                        like.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide plot">
+                    <video
+                        src="../images/drone/circle-telemetry.mp4"
+                        poster="../images/drone/telemetry-panel.png"
+                        controls
+                        muted
+                        playsinline
+                        preload="none"
+                        width="1600"
+                        height="1000"
+                    ></video>
+                    <figcaption>
+                        The same flight replayed as a live dashboard: ground
+                        track and stick positions on the left, and on the right
+                        position, attitude with the commanded values overlaid,
+                        per-rotor speed as model demand against ESC-measured RPM,
+                        and the estimator's altitude and heading against the raw
+                        rangefinder and magnetometer.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Flight video -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">In flight</p>
+
+                <h2>What that looks like from outside.</h2>
+
+                <p class="large-text">
+                    A short clip of the aircraft flying on the stabilisation
+                    described above. A longer walkthrough of the transmitter and
+                    the flight controller is in progress; this one is just the
+                    vehicle doing its job.
+                </p>
+
+                <p>
+                    All four axes are live on the sticks. Throttle takes it up
+                    and down, pitch drops or raises the nose and translates it
+                    forward and back, roll banks it and translates it sideways,
+                    and yaw rotates it about the vertical without moving it
+                    across the ground. None of those are direct commands to the
+                    motors &mdash; each one is a request that ends up as four
+                    rotor speed setpoints closed on measured RPM.
+                </p>
+
+                <p>
+                    The part worth watching is what happens when the sticks come
+                    back to centre. The aircraft stops and stays. Nothing outside
+                    the airframe is telling it where it is: the downward
+                    optical-flow sensor measures how the ground slides underneath
+                    it, the time-of-flight rangefinder measures how far below
+                    that ground is, and the estimator fuses both with the IMU
+                    into a position and a height it can hold against. Capturing a
+                    spot and sitting on it is that fusion working, not the pilot
+                    trimming.
+                </p>
+
+                <figure class="project-figure">
+                    <video
+                        src="../images/drone/flight-demo.mp4"
+                        poster="../images/drone/flight-demo-poster.jpg"
+                        controls
+                        muted
+                        playsinline
+                        preload="none"
+                        width="648"
+                        height="1152"
+                    ></video>
+                    <figcaption>
+                        Backyard flight test &mdash; climb out, translation on
+                        pitch and roll, and position hold on optical flow and the
+                        rangefinder between inputs.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
     </main>
 
 
@@ -406,7 +686,7 @@ tilt → body rate → angular acceleration → torque
     </footer>
 
 
-    <script src="../js/main.js?v=14"></script>
+    <script src="../js/main.js?v=15"></script>
 
 </body>
 </html>

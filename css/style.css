@@ -1089,6 +1089,16 @@ footer {
     background: #000;
 }
 
+/* Dense multi-panel plots. The 33vh cap shrinks their axis labels past
+   legibility, so let them take the full column width instead; width stays
+   auto so nothing is upscaled past its native size. */
+.project-figure.plot img,
+.project-figure.plot video {
+    width: auto;
+    max-width: 100%;
+    max-height: none;
+}
+
 
 /* =========================================================
    MOTION
