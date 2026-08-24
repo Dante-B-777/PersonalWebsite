@@ -16,6 +16,7 @@ Served by GitHub Pages from `main` at the repository root.
 | Quadrotor Flight Controller | [/projects/quadrotor.html](https://dantebenedetti.com/projects/quadrotor.html) | [`projects/quadrotor.html`](projects/quadrotor.html) |
 | Perception-Aware Autonomous Vehicle | [/projects/qcar.html](https://dantebenedetti.com/projects/qcar.html) | [`projects/qcar.html`](projects/qcar.html) |
 | Vision-Based Robotic Manipulator | [/projects/manipulator.html](https://dantebenedetti.com/projects/manipulator.html) | [`projects/manipulator.html`](projects/manipulator.html) |
+| Reaction-Wheel Satellite Attitude Control | [/projects/satellite.html](https://dantebenedetti.com/projects/satellite.html) | [`projects/satellite.html`](projects/satellite.html) |
 | Green Hydrogen Grid Stabilization | [/projects/hydrogen.html](https://dantebenedetti.com/projects/hydrogen.html) | [`projects/hydrogen.html`](projects/hydrogen.html) |
 | SteadiFly Flight Stabilizer | [/projects/steadifly.html](https://dantebenedetti.com/projects/steadifly.html) | [`projects/steadifly.html`](projects/steadifly.html) |
 
@@ -26,6 +27,8 @@ Served by GitHub Pages from `main` at the repository root.
 | Résumé | [/files/Dante_Benedetti_Resume.pdf](https://dantebenedetti.com/files/Dante_Benedetti_Resume.pdf) |
 | LitterBot final report | [/files/LitterBot_Final_Report.pdf](https://dantebenedetti.com/files/LitterBot_Final_Report.pdf) |
 | SteadiFly report | [/files/SteadiFly_Report.pdf](https://dantebenedetti.com/files/SteadiFly_Report.pdf) |
+| Satellite attitude control report | [/files/Satellite_Attitude_Control_Report.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Report.pdf) |
+| Satellite attitude control presentation | [/files/Satellite_Attitude_Control_Presentation.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Presentation.pdf) |
 | SteadiFly source | [/files/SteadiFly_Source.zip](https://dantebenedetti.com/files/SteadiFly_Source.zip) |
 
 ## Related repositories

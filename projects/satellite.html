@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="State-space modelling and pole-placement control of a reaction-wheel satellite attitude system, with a reference prefilter and full-order Luenberger observer."
+    >
+
+    <title>Satellite Attitude Control | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=15">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Modern Control · State-Space Design · Estimation
+                </p>
+
+                <h1>Reaction-Wheel Satellite Attitude Control</h1>
+
+                <p class="hero-text">
+                    A satellite will not return to a commanded orientation on
+                    its own — it drifts. This project builds the state-space
+                    model that explains why, then designs the feedback and the
+                    estimator that fix it.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Course</span>
+                        EE 513 — Modern Control Theory, Cal Poly
+                        San Luis Obispo
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        Winter 2026 · submitted March 2026
+                    </div>
+                    <div>
+                        <span class="meta-label">Team</span>
+                        Two engineers
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>State-Space Modelling</span>
+                    <span>Pole Placement</span>
+                    <span>Luenberger Observer</span>
+                    <span>Controllability</span>
+                    <span>Observability</span>
+                    <span>Reference Prefilter</span>
+                    <span>MIMO</span>
+                    <span>MATLAB</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Headline facts -->
+        <section class="section results-section">
+
+            <div class="container">
+
+                <p class="section-label">The system</p>
+
+                <h2>Third order, two inputs, two measurements.</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">
+                            States — attitude, satellite rate, and reaction
+                            wheel speed
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">2</span>
+                        <span class="stat-label">
+                            Control inputs — internal wheel torque and
+                            external thruster torque
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">rank 3</span>
+                        <span class="stat-label">
+                            Controllability matrix — full rank, so any state
+                            is reachable
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">10°</span>
+                        <span class="stat-label">
+                            Step command tracked with no steady-state error
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Modelling -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Modelling</p>
+
+                <h2>From angular momentum to a state-space plant.</h2>
+
+                <p class="large-text">
+                    The model starts from rotational dynamics rather than from
+                    an assumed transfer function. A reaction wheel exchanges
+                    angular momentum with the satellite body; a thruster adds
+                    momentum to the whole system from outside. Those are
+                    physically different actions, and the model has to keep
+                    them distinct.
+                </p>
+
+                <p>
+                    Newton's rotational torque law gives one second-order
+                    equation for the satellite body and one first-order
+                    equation for the wheel. The wheel's motor torque appears
+                    with opposite signs in the two — it accelerates the wheel
+                    while pushing back equally on the body. The thruster torque
+                    appears only on the body. Checking the total angular
+                    momentum of the combined system confirms the sign
+                    convention: the internal wheel torque cancels out, leaving
+                    the momentum rate equal to the external thruster torque
+                    alone, exactly as it should be.
+                </p>
+
+                <h3>Choosing the states</h3>
+
+                <p>
+                    One second-order equation plus one first-order equation
+                    makes a third-order system, so three states are the
+                    minimum: satellite attitude, satellite angular rate, and
+                    reaction wheel speed. The two outputs were chosen for what
+                    a real spacecraft can actually measure — attitude from
+                    sensors, and wheel speed from motor encoder telemetry. The
+                    satellite's angular rate is deliberately left unmeasured,
+                    which is what motivates the observer later.
+                </p>
+
+                <h3>Why the open loop drifts</h3>
+
+                <p>
+                    The state matrix is already in Jordan form, with all three
+                    eigenvalues at the origin. That alone is not conclusive —
+                    what matters is the structure. A two-by-two Jordan block at
+                    zero means a double integrator, so any nonzero initial
+                    angular rate makes the attitude angle grow linearly and
+                    without bound. The satellite drifts and cannot recover on
+                    its own. In transfer-function terms the attitude output
+                    goes as 1/s² in applied torque, while wheel speed goes as
+                    1/s. Constant torque therefore produces a quadratically
+                    growing pointing error.
+                </p>
+
+                <p>
+                    This is the whole argument for closed-loop control, and it
+                    falls out of the model rather than being asserted.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Control design -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Control design</p>
+
+                <h2>Placing the poles, then estimating what is missing.</h2>
+
+                <p>
+                    Before designing anything, controllability and
+                    observability were verified by rank tests. The
+                    controllability matrix comes out full rank, meaning the two
+                    torque inputs together have enough authority to drive the
+                    system to any state — a precondition for pole placement to
+                    be possible at all rather than an afterthought.
+                </p>
+
+                <h3>State feedback with a reference prefilter</h3>
+
+                <p>
+                    A multi-input state-feedback law places the closed-loop
+                    poles in the left half plane, which removes the drift and
+                    gives exponential convergence to the commanded attitude.
+                    State feedback alone, though, will not track a step command
+                    to the right final value — it stabilises without
+                    guaranteeing unity DC gain. A reference prefilter scales
+                    the command so a 10° request settles at 10°.
+                </p>
+
+                <h3>A full-order Luenberger observer</h3>
+
+                <p>
+                    Because satellite angular rate is not measured, full-state
+                    feedback needs an estimate of it. A full-order observer
+                    reconstructs the complete state from the two available
+                    measurements. Started deliberately from mismatched initial
+                    conditions, the estimated attitude and rate converge onto
+                    the true values quickly enough that the controller behaves
+                    as though it had been given the real state all along.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Simulation results</p>
+
+                <h2>Tracking, actuator effort, and estimator convergence.</h2>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/satellite/step-response.jpg"
+                        alt="Closed-loop attitude step response: satellite angle rises smoothly from zero and settles onto the 10 degree reference with no overshoot."
+                        width="760"
+                        height="572"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Closed-loop response to a 10° attitude command —
+                        well damped, no steady-state error.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/satellite/torque-inputs.jpg"
+                        alt="Commanded wheel torque and thruster torque against time, both starting near plus or minus 1.5 newton-metres and decaying smoothly toward zero."
+                        width="760"
+                        height="572"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The torque both actuators are asked for. Bounded
+                        throughout — the manoeuvre is achievable with real
+                        hardware, not just on paper.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/satellite/observer.jpg"
+                        alt="True and estimated satellite attitude plotted together from mismatched initial conditions; the estimate converges onto the true value within the first few seconds and both settle at the reference."
+                        width="760"
+                        height="572"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Observer convergence from deliberately mismatched
+                        initial conditions — the estimate locks onto the true
+                        attitude within the first few seconds.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Trade studies -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Trade studies</p>
+
+                <h2>What the design costs in hardware.</h2>
+
+                <p class="large-text">
+                    A controller that works in simulation is only useful if the
+                    actuators it assumes can be built. Two parametric studies
+                    put numbers on that.
+                </p>
+
+                <ul class="case-list">
+                    <li>
+                        <strong>Inertia versus actuator demand.</strong>
+                        Holding the controller poles fixed and increasing
+                        satellite inertia raises peak wheel torque, peak
+                        thruster torque, and peak wheel speed substantially.
+                        A controller tuned for a small satellite will outrun
+                        its actuators on a larger one, even for the same
+                        commanded angle.
+                    </li>
+                    <li>
+                        <strong>Pole location versus effort.</strong> With
+                        inertias fixed, poles nearer the origin give slower
+                        rise and settling but demand far less torque; poles
+                        pushed further left respond faster and cost more peak
+                        torque. Speed is bought with actuator capability.
+                    </li>
+                </ul>
+
+                <div class="project-highlight">
+                    Both studies point at the same practical conclusion:
+                    pole placement is not free. Where the poles go is a
+                    hardware budget decision as much as a control one.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Documents -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Documentation</p>
+
+                <h2>Report and presentation.</h2>
+
+                <div class="link-row">
+
+                    <a
+                        class="button primary"
+                        href="../files/Satellite_Attitude_Control_Report.pdf"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Read the full report (PDF)
+                    </a>
+
+                    <a
+                        class="button secondary"
+                        href="../files/Satellite_Attitude_Control_Presentation.pdf"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        View the presentation (PDF)
+                    </a>
+
+                </div>
+
+                <p class="doc-note">
+                    The report carries the full derivation from angular
+                    momentum through the state-space model, the stability,
+                    controllability and observability analysis, the controller
+                    and observer design, and both parametric trade studies.
+                    The presentation is the condensed version delivered to the
+                    class.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=15"></script>
+
+</body>
+</html>

@@ -11,6 +11,8 @@ files/*
 !files/LitterBot_Final_Report.pdf
 !files/SteadiFly_Report.pdf
 !files/SteadiFly_Source.zip
+!files/Satellite_Attitude_Control_Report.pdf
+!files/Satellite_Attitude_Control_Presentation.pdf
 
 # Raw camera video: 1080p60 originals are 100-270MB, over GitHub's
 # 100MB per-file limit. Transcoded, audio-stripped copies are committed
