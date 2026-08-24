@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 370" width="940" height="370" role="img" aria-labelledby="sf-title sf-desc">
+  <title id="sf-title">State feedback control system block diagram</title>
+  <desc id="sf-desc">Reference v passes through prefilter F and sums with negative state feedback K times x to form the control input u. u drives B into a summing junction with A times x, integrates to the state x, and passes through C to output y. D feeds u forward to the output.</desc>
+
+  <defs>
+    <marker id="sfArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a56db"/>
+    </marker>
+    <style>
+      .wire { fill:none; stroke:#1a56db; stroke-width:2; }
+      .blk  { fill:#ffffff; stroke:#12151c; stroke-width:2; }
+      .jct  { fill:#ffffff; stroke:#12151c; stroke-width:2; }
+      .blbl { font:600 19px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .slbl { font:italic 16px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .sig  { font:600 15px "Segoe UI",Arial,sans-serif; fill:#0ea5a5; text-anchor:middle; }
+      .sgn  { font:600 16px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .node { fill:#12151c; }
+    </style>
+  </defs>
+
+  <!-- ===== forward path ===== -->
+  <text class="slbl" x="32" y="165">v(t)</text>
+  <path class="wire" d="M 52 160 L 96 160" marker-end="url(#sfArrow)"/>
+
+  <rect class="blk" x="100" y="139" width="54" height="42" rx="6"/>
+  <text class="blbl" x="127" y="167">F</text>
+
+  <path class="wire" d="M 154 160 L 190 160" marker-end="url(#sfArrow)"/>
+
+  <circle class="jct" cx="212" cy="160" r="16"/>
+  <text class="blbl" x="212" y="167">Σ</text>
+  <text class="sgn" x="193" y="139">+</text>
+  <text class="sgn" x="234" y="194">−</text>
+
+  <path class="wire" d="M 228 160 L 290 160" marker-end="url(#sfArrow)"/>
+  <text class="sig" x="274" y="142">u(t)</text>
+  <circle class="node" cx="256" cy="160" r="4"/>
+
+  <rect class="blk" x="296" y="139" width="54" height="42" rx="6"/>
+  <text class="blbl" x="323" y="167">B</text>
+
+  <path class="wire" d="M 350 160 L 386 160" marker-end="url(#sfArrow)"/>
+
+  <circle class="jct" cx="408" cy="160" r="16"/>
+  <text class="blbl" x="408" y="167">Σ</text>
+  <text class="sgn" x="389" y="139">+</text>
+  <text class="sgn" x="430" y="194">+</text>
+
+  <path class="wire" d="M 424 160 L 464 160" marker-end="url(#sfArrow)"/>
+
+  <rect class="blk" x="470" y="139" width="54" height="42" rx="6"/>
+  <text class="blbl" x="497" y="170">∫</text>
+
+  <path class="wire" d="M 524 160 L 602 160" marker-end="url(#sfArrow)"/>
+  <text class="sig" x="578" y="142">x(t)</text>
+  <circle class="node" cx="556" cy="160" r="4"/>
+
+  <rect class="blk" x="608" y="139" width="54" height="42" rx="6"/>
+  <text class="blbl" x="635" y="167">C</text>
+
+  <path class="wire" d="M 662 160 L 756 160" marker-end="url(#sfArrow)"/>
+
+  <circle class="jct" cx="778" cy="160" r="16"/>
+  <text class="blbl" x="778" y="167">Σ</text>
+  <text class="sgn" x="759" y="139">+</text>
+  <text class="sgn" x="799" y="139">+</text>
+
+  <path class="wire" d="M 794 160 L 862 160" marker-end="url(#sfArrow)"/>
+  <text class="slbl" x="890" y="165">y(t)</text>
+
+  <!-- ===== D feedforward: u -> output sum ===== -->
+  <path class="wire" d="M 256 160 L 256 62 L 546 62"/>
+  <rect class="blk" x="550" y="41" width="54" height="42" rx="6"/>
+  <text class="blbl" x="577" y="69">D</text>
+  <path class="wire" d="M 604 62 L 778 62 L 778 144" marker-end="url(#sfArrow)"/>
+
+  <!-- ===== A inner feedback: x -> sum 2 ===== -->
+  <path class="wire" d="M 556 160 L 556 246 L 439 246"/>
+  <rect class="blk" x="381" y="225" width="54" height="42" rx="6"/>
+  <text class="blbl" x="408" y="253">A</text>
+  <path class="wire" d="M 381 246 L 344 246 L 344 208 L 408 208 L 408 176" marker-end="url(#sfArrow)"/>
+
+  <!-- ===== K state feedback: x -> sum 1 ===== -->
+  <path class="wire" d="M 556 160 L 556 322 L 285 322"/>
+  <rect class="blk" x="227" y="301" width="54" height="42" rx="6"/>
+  <text class="blbl" x="254" y="329">K</text>
+  <path class="wire" d="M 227 322 L 212 322 L 212 176" marker-end="url(#sfArrow)"/>
+</svg>

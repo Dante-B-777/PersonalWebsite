@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 400" width="940" height="400" role="img" aria-labelledby="ob-title ob-desc">
+  <title id="ob-title">Full-state observer block diagram</title>
+  <desc id="ob-desc">Input u drives the plant, whose output y is compared against the reconstructed output. The residual passes through the observer gain L, sums with B times u and A times the estimate, and integrates to produce the state estimate x-hat, which is fed back through C to close the estimation loop.</desc>
+
+  <defs>
+    <marker id="obArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a56db"/>
+    </marker>
+    <style>
+      .wire { fill:none; stroke:#1a56db; stroke-width:2; }
+      .blk  { fill:#ffffff; stroke:#12151c; stroke-width:2; }
+      .jct  { fill:#ffffff; stroke:#12151c; stroke-width:2; }
+      .blbl { font:600 19px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .slbl { font:italic 16px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .sig  { font:600 15px "Segoe UI",Arial,sans-serif; fill:#0ea5a5; text-anchor:middle; }
+      .sgn  { font:600 16px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .plnt { font:500 14px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+      .node { fill:#12151c; }
+      .eq   { font:italic 17px "Segoe UI",Arial,sans-serif; fill:#12151c; text-anchor:middle; }
+    </style>
+  </defs>
+
+  <!-- ===== input ===== -->
+  <text class="slbl" x="30" y="205">u(t)</text>
+  <path class="wire" d="M 50 200 L 108 200" marker-end="url(#obArrow)"/>
+  <circle class="node" cx="76" cy="200" r="4"/>
+
+  <!-- ===== plant ===== -->
+  <rect class="blk" x="112" y="172" width="132" height="56" rx="6"/>
+  <text class="plnt" x="178" y="195">ẋ = Ax + Bu</text>
+  <text class="plnt" x="178" y="216">y = Cx + Du</text>
+
+  <path class="wire" d="M 244 200 L 316 200" marker-end="url(#obArrow)"/>
+  <text class="sig" x="282" y="188">y(t)</text>
+
+  <!-- ===== residual sum ===== -->
+  <circle class="jct" cx="338" cy="200" r="16"/>
+  <text class="blbl" x="338" y="207">Σ</text>
+  <text class="sgn" x="319" y="182">+</text>
+  <text class="sgn" x="316" y="236">−</text>
+  <text class="sgn" x="358" y="182">−</text>
+
+  <path class="wire" d="M 354 200 L 400 200" marker-end="url(#obArrow)"/>
+
+  <!-- ===== observer gain L ===== -->
+  <rect class="blk" x="404" y="179" width="54" height="42" rx="6"/>
+  <text class="blbl" x="431" y="207">L</text>
+
+  <path class="wire" d="M 458 200 L 502 200" marker-end="url(#obArrow)"/>
+
+  <!-- ===== estimator sum ===== -->
+  <circle class="jct" cx="524" cy="200" r="16"/>
+  <text class="blbl" x="524" y="207">Σ</text>
+  <text class="sgn" x="505" y="182">+</text>
+  <text class="sgn" x="542" y="176">+</text>
+  <text class="sgn" x="546" y="232">+</text>
+
+  <path class="wire" d="M 540 200 L 588 200" marker-end="url(#obArrow)"/>
+
+  <!-- ===== integrator ===== -->
+  <rect class="blk" x="592" y="179" width="54" height="42" rx="6"/>
+  <text class="blbl" x="619" y="210">∫</text>
+
+  <path class="wire" d="M 646 200 L 830 200" marker-end="url(#obArrow)"/>
+  <circle class="node" cx="704" cy="200" r="4"/>
+  <text class="slbl" x="866" y="205">x̂(t)</text>
+
+  <!-- ===== D: u -> residual sum (negative) ===== -->
+  <path class="wire" d="M 76 200 L 76 78 L 236 78"/>
+  <rect class="blk" x="240" y="57" width="54" height="42" rx="6"/>
+  <text class="blbl" x="267" y="85">D</text>
+  <path class="wire" d="M 294 78 L 338 78 L 338 184" marker-end="url(#obArrow)"/>
+
+  <!-- ===== B: u -> estimator sum ===== -->
+  <path class="wire" d="M 76 200 L 76 130 L 420 130"/>
+  <rect class="blk" x="424" y="109" width="54" height="42" rx="6"/>
+  <text class="blbl" x="451" y="137">B</text>
+  <path class="wire" d="M 478 130 L 524 130 L 524 184" marker-end="url(#obArrow)"/>
+
+  <!-- ===== A: x-hat -> estimator sum ===== -->
+  <path class="wire" d="M 704 200 L 704 276 L 610 276"/>
+  <rect class="blk" x="552" y="255" width="54" height="42" rx="6"/>
+  <text class="blbl" x="579" y="283">A</text>
+  <path class="wire" d="M 552 276 L 524 276 L 524 216" marker-end="url(#obArrow)"/>
+
+  <!-- ===== C: x-hat -> residual sum (negative) ===== -->
+  <path class="wire" d="M 704 200 L 704 340 L 420 340"/>
+  <rect class="blk" x="362" y="319" width="54" height="42" rx="6"/>
+  <text class="blbl" x="389" y="347">C</text>
+  <path class="wire" d="M 362 340 L 338 340 L 338 216" marker-end="url(#obArrow)"/>
+
+  <!-- ===== governing equation ===== -->
+  <text class="eq" x="470" y="390">x̂̇ = Bu + L( y − Du − Cx̂ ) + Ax̂</text>
+</svg>

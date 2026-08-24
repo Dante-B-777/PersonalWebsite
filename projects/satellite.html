@@ -11,7 +11,7 @@
 
     <title>Satellite Attitude Control | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=15">
+    <link rel="stylesheet" href="../css/style.css?v=16">
 </head>
 
 <body>
@@ -248,6 +248,22 @@
                     the command so a 10° request settles at 10°.
                 </p>
 
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/satellite/state-feedback-diagram.svg"
+                        alt="Block diagram of a state feedback control system: reference v through prefilter F into a summing junction, minus K times the state, giving control input u; u through B into a second summing junction with A times the state, integrated to give the state x, then through C to the output y, with D feeding u forward to the output."
+                        width="940"
+                        height="370"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The standard state-feedback structure — prefilter
+                        <em>F</em> sets the DC gain, gain <em>K</em> places the
+                        closed-loop poles.
+                    </figcaption>
+                </figure>
+
                 <h3>A full-order Luenberger observer</h3>
 
                 <p>
@@ -260,6 +276,22 @@
                     as though it had been given the real state all along.
                 </p>
 
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/satellite/observer-diagram.svg"
+                        alt="Block diagram of a full-state observer: the plant output y is differenced against the reconstructed output C x-hat and the feedforward term D u; the residual passes through observer gain L, sums with B u and A x-hat, and integrates to produce the state estimate x-hat."
+                        width="940"
+                        height="400"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The observer runs a model of the plant in parallel and
+                        corrects it by the measurement residual through
+                        <em>L</em>, so the estimate is driven onto the true
+                        state.
+                    </figcaption>
+                </figure>
             </div>
 
         </section>
@@ -423,7 +455,7 @@
     </footer>
 
 
-    <script src="../js/main.js?v=15"></script>
+    <script src="../js/main.js?v=16"></script>
 
 </body>
 </html>
