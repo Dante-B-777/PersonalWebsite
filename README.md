@@ -100,7 +100,9 @@ breaks, the page still renders.
 
 **Third-party images.** `images/qcar/` and `images/manipulator/arm-hardware.jpg`
 hold vendor product photography from Quanser and ROBOTIS, used to show the
-platforms worked on. Everything else is my own.
+platforms worked on. `images/satellite/reaction-wheel.jpg` and
+`images/satellite/satellite-orbit.jpg` are NASA/JPL-Caltech public-domain
+photographs, credited in their captions. Everything else is my own.
 
 ---
 

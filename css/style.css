@@ -1164,3 +1164,10 @@ footer {
         width: 150px;
     }
 }
+
+.credit {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: #8b93a1;
+}
