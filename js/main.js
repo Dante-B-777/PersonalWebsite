@@ -91,3 +91,31 @@
         }, 400);
     });
 })();
+
+// A PDF cannot embed video, so surface each clip's address for print.
+// The note is hidden on screen and only appears in the print stylesheet.
+(function () {
+    var media = document.querySelectorAll('iframe[src], video[src]');
+
+    media.forEach(function (el) {
+        var raw = el.getAttribute('src');
+        if (!raw) {
+            return;
+        }
+
+        var label;
+        if (el.tagName === 'IFRAME') {
+            var id = raw.match(/embed\/([\w-]+)/);
+            label = id ? 'youtu.be/' + id[1] : raw;
+        } else {
+            label = 'dantebenedetti.com/' + raw.replace(/^(\.\.\/)+/, '');
+        }
+
+        var note = document.createElement('p');
+        note.className = 'print-only media-note';
+        note.textContent = 'Video — watch at ' + label;
+
+        var host = el.closest('figure') || el.parentNode;
+        host.appendChild(note);
+    });
+})();

@@ -1171,3 +1171,253 @@ footer {
     font-size: 0.8rem;
     color: #8b93a1;
 }
+
+/* =========================================================
+   PRINT / PDF PORTFOLIO
+   ========================================================= */
+
+.print-only {
+    display: none;
+}
+
+@media print {
+
+    @page {
+        size: Letter;
+        margin: 0.55in 0.6in;
+    }
+
+    html, body {
+        background: #fff;
+        font-size: 10.5pt;
+        line-height: 1.45;
+    }
+
+    /* Navigation chrome is meaningless on paper */
+    .site-header,
+    .nav-toggle,
+    nav,
+    .back-link,
+    footer {
+        display: none !important;
+    }
+
+    /* The scroll reveal must never hide content in print */
+    .js-reveal .reveal,
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    .media-note {
+        margin-top: 8px;
+        padding: 7px 10px;
+        border-left: 3px solid #1a56db;
+        background: #f2f6ff;
+        font-size: 8.5pt;
+        color: #24439c;
+        word-break: break-all;
+    }
+
+    /* Media cannot render in a PDF - the note replaces it */
+    video,
+    iframe,
+    .video-frame,
+    .more-videos {
+        display: none !important;
+    }
+
+    /* Tighten the generous screen rhythm */
+    .section,
+    .project-hero,
+    .hero {
+        padding: 14pt 0 !important;
+        min-height: 0 !important;
+        background: none !important;
+        border: 0 !important;
+    }
+
+    .hero-content {
+        padding: 0 !important;
+    }
+
+    .container,
+    .container.narrow {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .hero h1,
+    .project-hero h1 {
+        font-size: 22pt !important;
+        color: #12151c !important;
+        -webkit-text-fill-color: #12151c;
+        margin-bottom: 6pt;
+    }
+
+    .section h2 {
+        font-size: 14pt !important;
+        margin: 4pt 0 6pt;
+    }
+
+    .section h3 {
+        font-size: 11pt !important;
+        margin: 10pt 0 4pt;
+    }
+
+    .hero-text,
+    .large-text {
+        font-size: 11pt !important;
+    }
+
+    .stat-value {
+        font-size: 15pt !important;
+        color: #1a56db !important;
+        -webkit-text-fill-color: #1a56db;
+    }
+
+    /* Keep related blocks whole across page breaks */
+    .project-figure,
+    .stat,
+    .topic,
+    .project-card,
+    .education-card,
+    .recognition-card,
+    .attribution,
+    .project-highlight,
+    .experience-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    h1, h2, h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    /* Figures sized for paper, not viewport height */
+    .project-figure img {
+        max-height: 2.9in !important;
+        max-width: 100% !important;
+    }
+
+    .project-figure.wide img {
+        max-height: 3.2in !important;
+    }
+
+    .hero-portrait img {
+        width: 1.25in !important;
+        box-shadow: none !important;
+    }
+
+    .project-image {
+        height: 1.6in !important;
+    }
+
+    .project-grid {
+        gap: 12pt !important;
+    }
+
+    .stat-grid,
+    .topic-grid {
+        gap: 10pt !important;
+    }
+
+    /* Spell out destinations that a click cannot follow on paper */
+    .contact-links a::after,
+    .link-row a::after {
+        content: " (" attr(href) ")";
+        font-size: 8pt;
+        font-weight: 400;
+        color: #5b6472;
+    }
+
+    .contact-section {
+        background: none !important;
+        color: #12151c !important;
+    }
+
+    .contact-section h2,
+    .contact-section .section-label,
+    .contact-section .large-text,
+    .contact-links a {
+        color: #12151c !important;
+        -webkit-text-fill-color: #12151c;
+    }
+
+    .button {
+        border: 1px solid #c9d2e0 !important;
+        background: none !important;
+        color: #12151c !important;
+        box-shadow: none !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* A Letter page at these margins is ~700px wide, which trips the mobile
+       breakpoint and collapses every grid to a single column. Restore them. */
+    .stat-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+
+    .topic-grid,
+    .project-meta {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .project-grid,
+    .two-up,
+    .education-grid,
+    .recognition-grid,
+    .coursework-grid,
+    .skills-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    /* The featured card spans both columns on screen; on paper that wastes
+       most of a page, so let it pair with its neighbour instead. */
+    .featured-project {
+        grid-column: span 1 !important;
+    }
+
+    .experience-heading {
+        flex-direction: row !important;
+    }
+
+    .stat,
+    .topic,
+    .education-card,
+    .recognition-card {
+        padding: 10pt !important;
+    }
+
+    .stat-label,
+    .topic p {
+        font-size: 8.5pt !important;
+    }
+
+    .project-content {
+        padding: 10pt !important;
+    }
+
+    .project-content h3 {
+        font-size: 11pt !important;
+    }
+
+    .project-content p,
+    .project-tags span {
+        font-size: 8.5pt !important;
+    }
+
+    /* On-screen calls to action mean nothing on paper */
+    .hero-buttons,
+    .project-content > a {
+        display: none !important;
+    }
+}

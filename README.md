@@ -106,6 +106,27 @@ photographs, credited in their captions. Everything else is my own.
 
 ---
 
+## Building the PDF portfolio
+
+Some applications want a portfolio file rather than a link. `tools/build_portfolio.py`
+prints every page of the site through headless Edge and merges the results, with the
+resume in front and a bookmark per project:
+
+```bash
+python -m http.server 8123          # serve the site first
+python tools/build_portfolio.py     # then render and merge
+```
+
+The output lands in the script's `portfolio/` folder as
+`Dante_Benedetti_Portfolio.pdf`.
+
+Print layout is controlled by the `@media print` block at the end of
+`css/style.css`. It hides navigation and calls to action, forces the scroll
+reveal visible, caps figures at 2.9in, and restores the multi-column grids —
+a Letter page is only about 700px wide, which would otherwise trip the mobile
+breakpoint and stack everything into one column. Video cannot embed in a PDF,
+so `js/main.js` appends a print-only line under each clip giving its address.
+
 ## Local preview
 
 ```bash
