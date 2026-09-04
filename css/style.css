@@ -860,6 +860,12 @@ footer {
     max-width: 1000px;
 }
 
+/* A linked figure needs a block-level anchor, or max-width resolves against
+   an inline box of zero width and the image collapses. */
+.project-figure a {
+    display: block;
+}
+
 .project-figure img {
     display: block;
     width: auto;

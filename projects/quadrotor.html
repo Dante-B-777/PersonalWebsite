@@ -11,7 +11,7 @@
 
     <title>Quadrotor Flight Controller | Dante Benedetti</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=21">
+    <link rel="stylesheet" href="../css/style.css?v=24">
 </head>
 
 <body>
@@ -205,6 +205,75 @@
                     real behaviour depends on battery sag, propeller loading,
                     and temperature.
                 </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Wiring -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Wiring</p>
+
+                <h2>Two sheets, drawn from the firmware.</h2>
+
+                <p class="section-intro">
+                    Both diagrams are generated from the pin assignments in the
+                    source, so the drawing cannot drift away from what the code
+                    actually does. Open either one full size for the detail.
+                </p>
+
+                <figure class="project-figure wide">
+                    <a href="../files/FPV2026_Wiring_Receiver.pdf" target="_blank" rel="noopener">
+                        <img
+                            src="../images/drone/wiring-receiver.png"
+                            alt="Receiver wiring sheet: a 4S LiPo feeding a 15 V to 5 V buck converter and the ESC power pads, an ESP32-WROOM-32 devkit with MPU-6050, VL53L0X and QMC5883P on I2C and a PMW3901 optical-flow sensor on SPI, and four bidirectional DShot300 lines to a 4-in-1 45 A ESC driving four brushless motors."
+                            width="2302"
+                            height="1694"
+                            loading="lazy"
+                        >
+                    </a>
+                    <figcaption>
+                        Sheet 1 — receiver and flight controller. Power enters
+                        as 14.8 V and splits: straight to the ESC pads, and
+                        through a buck to 5 V for the ESP32. Every sensor shares
+                        the devkit's 3V3 rail, and each motor command line
+                        carries eRPM back on the same wire.
+                        <span class="credit">Click to open the vector PDF</span>
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide">
+                    <a href="../files/FPV2026_Wiring_Transmitter.pdf" target="_blank" rel="noopener">
+                        <img
+                            src="../images/drone/wiring-transmitter.png"
+                            alt="Transmitter wiring sheet: two analogue gimbals supplying throttle, yaw, roll and pitch to an ESP32-WROOM-32 devkit, with kill and on/off momentary buttons, two indicator LEDs behind 330 ohm resistors, and a 6 V battery pack into VIN."
+                            width="2150"
+                            height="1352"
+                            loading="lazy"
+                        >
+                    </a>
+                    <figcaption>
+                        Sheet 2 — transmitter. Four analogue axes off two
+                        gimbals, kill and arm buttons, status LEDs, and an
+                        ESP-NOW link running at 50 Hz to the airframe.
+                        <span class="credit">Click to open the vector PDF</span>
+                    </figcaption>
+                </figure>
+
+                <div class="project-highlight">
+                    Two constraints on this board are easy to get wrong and
+                    expensive to discover in the air. The I2C bus is swapped
+                    from the ESP32's published default — the firmware calls
+                    <em>Wire.begin(22, 21)</em>, so wiring to the datasheet
+                    pinout gives a dead bus. And the gimbal potentiometers must
+                    run from 3.3 V, not the 5–6 V pack: GPIO34 and GPIO35 are
+                    3.6 V absolute maximum, so a 6 V wiper sits above both the
+                    ADC range and the pin rating.
+                </div>
 
             </div>
 
@@ -686,7 +755,7 @@ tilt → body rate → angular acceleration → torque
     </footer>
 
 
-    <script src="../js/main.js?v=21"></script>
+    <script src="../js/main.js?v=24"></script>
 
 </body>
 </html>
