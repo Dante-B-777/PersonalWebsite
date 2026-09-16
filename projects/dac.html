@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="PCB design of a 4-bit binary-weighted resistor DAC on a one-inch two-layer board: LTspice simulation, Fusion 360 schematic capture and layout, all surface-mount, driving a speaker from a laptop's digital audio."
+    >
+
+    <title>4-Bit DAC PCB | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=25">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    ← Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    PCB Design · Analog Electronics · Schematic Capture
+                </p>
+
+                <h1>4-Bit DAC on a One-Inch PCB</h1>
+
+                <p class="hero-text">
+                    A binary-weighted resistor digital-to-analog converter
+                    taken from LTspice simulation through schematic capture
+                    and a two-layer surface-mount layout in Fusion 360 — then
+                    built, and used to play digital audio from a laptop
+                    through a speaker.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Circuit design, simulation, schematic capture,
+                        and PCB layout
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        Fall 2023
+                    </div>
+                    <div>
+                        <span class="meta-label">Team</span>
+                        Two-person project
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>PCB Layout</span>
+                    <span>Fusion 360</span>
+                    <span>LTspice</span>
+                    <span>Surface Mount</span>
+                    <span>Op-Amp Design</span>
+                    <span>LM1458</span>
+                    <span>Two-Layer</span>
+                    <span>Audio</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Headline facts -->
+        <section class="section results-section">
+
+            <div class="container">
+
+                <p class="section-label">The board</p>
+
+                <h2>Small, dense, and all surface-mount.</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <span class="stat-value">1″ × 1″</span>
+                        <span class="stat-label">
+                            Board outline — the full circuit on one square
+                            inch
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">2</span>
+                        <span class="stat-label">
+                            Copper layers, routed across nine vias
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">
+                            Surface-mount — 1206 resistors and an SOIC dual
+                            op amp
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">~40 mV</span>
+                        <span class="stat-label">
+                            Output step per binary count in simulation
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PCB design - the highlight -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">PCB design</p>
+
+                <h2>Schematic to routed board.</h2>
+
+                <p class="section-intro">
+                    The schematic was captured in Fusion 360 and laid out on a
+                    one-inch, two-layer board. Every component is surface-mount.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/dac/schematic.png"
+                        alt="Fusion 360 schematic of the 4-bit DAC: a five-pin input header feeding four weighted resistors into the first LM1458 op amp as an inverting summer, a second inverting stage with 10k and 1k resistors, a three-pin power header, a four-pin output header, and a right-angle audio jack on the output."
+                        width="1137"
+                        height="633"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Schematic capture. A five-pin header brings in the four
+                        bits, four weighted resistors sum them at the first
+                        op amp, a second stage re-inverts and scales the
+                        result, and the output lands on an audio jack.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure">
+                    <img
+                        src="../images/dac/pcb-layout.png"
+                        alt="Two-layer PCB layout of the DAC on a one-inch board: red top-layer traces and blue bottom-layer traces linked by vias, an LM1458 SOIC package, seven 1206 resistors, three pin headers, a right-angle audio jack footprint, and four corner mounting holes."
+                        width="871"
+                        height="783"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The routed board — top copper in red, bottom in blue,
+                        nine vias between them. Four corner holes mount the
+                        board to a chassis alongside the Arduino that drives
+                        it; two smaller holes secure the audio jack.
+                    </figcaption>
+                </figure>
+
+                <h3>Layout decisions</h3>
+
+                <p>
+                    The size constraint drove most of the choices. Fitting an
+                    SOIC dual op amp, seven resistors, three headers, and a
+                    right-angle audio jack into one square inch meant going
+                    entirely surface-mount, with 1206 resistors as the smallest
+                    package that could still be hand-soldered reliably. The
+                    traces occupy both copper layers and cross through nine
+                    vias to reach every component without a dead end.
+                </p>
+
+                <p>
+                    A ground pour was deliberately left off. For a four-bit
+                    converter at audio frequencies there is no return-path or
+                    thermal case for one, and omitting it kept the two-layer
+                    routing simpler to verify by eye.
+                </p>
+
+                <p>
+                    Three headers separate the board's roles. A three-pin
+                    header supplies ground and the ±12 V rails to the op amps.
+                    A five-pin header takes the four input bits plus ground. A
+                    four-pin header exposes the output of each op amp stage
+                    for probing — so the summing stage and the scaling stage
+                    can be checked independently on a bench.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Circuit design -->
+        <section class="section alt-section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Circuit design</p>
+
+                <h2>Weighting four bits with resistors.</h2>
+
+                <p class="large-text">
+                    A binary-weighted DAC treats each bit as its own input and
+                    gives it a resistor sized so that bit 3 carries twice the
+                    weight of bit 2, which carries twice the weight of bit 1,
+                    and so on. An inverting summing amplifier adds them.
+                </p>
+
+                <p>
+                    With a 2.55 kΩ feedback resistor setting the top-bit gain
+                    at one, the remaining inputs needed 5.1 kΩ, 10 kΩ, and
+                    20 kΩ to weight bits 2, 1, and 0 at one half, one quarter,
+                    and one eighth. Those were chosen from a stock list of
+                    available values rather than the exact ideal ratios — close
+                    enough that the step size stays uniform across the range.
+                    A second inverting stage with a 10 kΩ and 1 kΩ pair flips
+                    the summed output back to positive and scales it by one
+                    tenth to a level an audio input can take. Both op amps
+                    run on ±12 V rails.
+                </p>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/dac/ltspice-schematic.png"
+                        alt="LTspice schematic of the DAC: four pulse voltage sources driving 20k, 10k, 5.1k and 2.55k resistors into an inverting summing amplifier with a 2.55k feedback resistor, followed by an inverting amplifier with 10k input and 1k feedback, powered from plus and minus 12 volts."
+                        width="1538"
+                        height="674"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        LTspice model. The four sources are pulse functions
+                        timed so the binary input counts up by one each
+                        second.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide">
+                    <img
+                        src="../images/dac/ltspice-sim.png"
+                        alt="LTspice simulation output: a staircase waveform over sixteen seconds, stepping up by roughly 40 millivolts each second as the binary input increments from 0 to 15."
+                        width="1742"
+                        height="979"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Simulated output over sixteen seconds — a clean
+                        staircase rising about 40 mV per count, confirming
+                        the resistor weighting before any hardware was
+                        ordered.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Application -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Result</p>
+
+                <h2>Digital audio in, sound out.</h2>
+
+                <p class="large-text">
+                    The board was assembled, tested stage by stage from the
+                    probe header, and then put to use: digital audio from a
+                    laptop was fed through the DAC and played out through a
+                    speaker via the on-board audio jack.
+                </p>
+
+                <div class="project-highlight">
+                    Simulating first paid off. The LTspice model predicted the
+                    step size and the output polarity before a single part was
+                    bought, so bring-up was a matter of confirming the board
+                    matched the model rather than debugging an unknown.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Documentation -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Documentation</p>
+
+                <h2>Design report.</h2>
+
+                <div class="link-row">
+
+                    <a
+                        class="button primary"
+                        href="../files/DAC_PCB_Design_Report.pdf"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Read the design report (PDF)
+                    </a>
+
+                </div>
+
+                <p class="doc-note">
+                    Covers the circuit design and LTspice simulation, the
+                    Fusion 360 schematic and layout, and the component
+                    selection behind the one-inch board.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>© 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=25"></script>
+
+</body>
+</html>

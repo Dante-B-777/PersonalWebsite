@@ -18,6 +18,7 @@ Served by GitHub Pages from `main` at the repository root.
 | Vision-Based Robotic Manipulator | [/projects/manipulator.html](https://dantebenedetti.com/projects/manipulator.html) | [`projects/manipulator.html`](projects/manipulator.html) |
 | Reaction-Wheel Satellite Attitude Control | [/projects/satellite.html](https://dantebenedetti.com/projects/satellite.html) | [`projects/satellite.html`](projects/satellite.html) |
 | Green Hydrogen Grid Stabilization | [/projects/hydrogen.html](https://dantebenedetti.com/projects/hydrogen.html) | [`projects/hydrogen.html`](projects/hydrogen.html) |
+| 4-Bit DAC PCB | [/projects/dac.html](https://dantebenedetti.com/projects/dac.html) | [`projects/dac.html`](projects/dac.html) |
 | SteadiFly Flight Stabilizer | [/projects/steadifly.html](https://dantebenedetti.com/projects/steadifly.html) | [`projects/steadifly.html`](projects/steadifly.html) |
 
 ## Downloads served by the site
@@ -29,6 +30,7 @@ Served by GitHub Pages from `main` at the repository root.
 | SteadiFly report | [/files/SteadiFly_Report.pdf](https://dantebenedetti.com/files/SteadiFly_Report.pdf) |
 | Satellite attitude control report | [/files/Satellite_Attitude_Control_Report.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Report.pdf) |
 | Satellite attitude control presentation | [/files/Satellite_Attitude_Control_Presentation.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Presentation.pdf) |
+| DAC PCB design report | [/files/DAC_PCB_Design_Report.pdf](https://dantebenedetti.com/files/DAC_PCB_Design_Report.pdf) |
 | SteadiFly source | [/files/SteadiFly_Source.zip](https://dantebenedetti.com/files/SteadiFly_Source.zip) |
 
 ## Related repositories

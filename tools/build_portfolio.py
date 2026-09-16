@@ -22,6 +22,7 @@ PAGES = [
     ("projects/satellite.html", "Satellite Attitude Control"),
     ("projects/hydrogen.html",  "Green Hydrogen Grid Stabilization"),
     ("projects/steadifly.html", "SteadiFly Flight Stabilizer"),
+    ("projects/dac.html",       "4-Bit DAC PCB"),
 ]
 
 RESUME = os.path.join(REPO, "files", "Dante_Benedetti_Resume.pdf")
