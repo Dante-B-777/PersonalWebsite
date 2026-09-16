@@ -17,12 +17,12 @@ PAGES = [
     ("index.html",              "Overview"),
     ("projects/litterbot.html", "Litter Collection Rover"),
     ("projects/quadrotor.html", "Quadrotor Flight Controller"),
+    ("projects/dac.html",       "4-Bit DAC PCB"),
     ("projects/qcar.html",      "Perception-Aware Autonomous Vehicle"),
     ("projects/manipulator.html", "Vision-Based Robotic Manipulator"),
     ("projects/satellite.html", "Satellite Attitude Control"),
     ("projects/hydrogen.html",  "Green Hydrogen Grid Stabilization"),
     ("projects/steadifly.html", "SteadiFly Flight Stabilizer"),
-    ("projects/dac.html",       "4-Bit DAC PCB"),
 ]
 
 RESUME = os.path.join(REPO, "files", "Dante_Benedetti_Resume.pdf")
