@@ -16,6 +16,7 @@ files/*
 !files/FPV2026_Wiring_Receiver.pdf
 !files/FPV2026_Wiring_Transmitter.pdf
 !files/DAC_PCB_Design_Report.pdf
+!files/FSBB_Schematic_RevA.pdf
 
 # Raw camera video: 1080p60 originals are 100-270MB, over GitHub's
 # 100MB per-file limit. Transcoded, audio-stripped copies are committed

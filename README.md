@@ -12,6 +12,7 @@ Served by GitHub Pages from `main` at the repository root.
 | Page | Live URL | Source |
 |---|---|---|
 | Home | [dantebenedetti.com](https://dantebenedetti.com) | [`index.html`](index.html) |
+| Satellite Solar Array Converter | [/projects/fsbb.html](https://dantebenedetti.com/projects/fsbb.html) | [`projects/fsbb.html`](projects/fsbb.html) |
 | Litter Collection Rover | [/projects/litterbot.html](https://dantebenedetti.com/projects/litterbot.html) | [`projects/litterbot.html`](projects/litterbot.html) |
 | Quadrotor Flight Controller | [/projects/quadrotor.html](https://dantebenedetti.com/projects/quadrotor.html) | [`projects/quadrotor.html`](projects/quadrotor.html) |
 | Perception-Aware Autonomous Vehicle | [/projects/qcar.html](https://dantebenedetti.com/projects/qcar.html) | [`projects/qcar.html`](projects/qcar.html) |
@@ -30,6 +31,7 @@ Served by GitHub Pages from `main` at the repository root.
 | SteadiFly report | [/files/SteadiFly_Report.pdf](https://dantebenedetti.com/files/SteadiFly_Report.pdf) |
 | Satellite attitude control report | [/files/Satellite_Attitude_Control_Report.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Report.pdf) |
 | Satellite attitude control presentation | [/files/Satellite_Attitude_Control_Presentation.pdf](https://dantebenedetti.com/files/Satellite_Attitude_Control_Presentation.pdf) |
+| FSBB Rev A schematic | [/files/FSBB_Schematic_RevA.pdf](https://dantebenedetti.com/files/FSBB_Schematic_RevA.pdf) |
 | DAC PCB design report | [/files/DAC_PCB_Design_Report.pdf](https://dantebenedetti.com/files/DAC_PCB_Design_Report.pdf) |
 | SteadiFly source | [/files/SteadiFly_Source.zip](https://dantebenedetti.com/files/SteadiFly_Source.zip) |
 
@@ -51,6 +53,7 @@ Served by GitHub Pages from `main` at the repository root.
 ├── js/main.js              mobile nav toggle + scroll reveal
 ├── images/                 one folder per project
 │   ├── litterbot/  drone/  qcar/  manipulator/  werc/  steadifly/
+│   ├── fsbb/       board render, SIMPLIS figures, KiCad layer plots
 │   └── headshot.jpg
 ├── files/                  publicly downloadable documents
 └── CNAME                   custom domain record
@@ -85,7 +88,7 @@ cached copy:
 
 ```bash
 for f in index.html projects/*.html; do
-  sed -i 's/v=14/v=15/g' "$f"
+  sed -i 's/v=26/v=27/g' "$f"
 done
 ```
 

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="A 30 W four-switch buck-boost converter for a satellite electrical power system: analog peak-current-mode control from a 6-24 V solar array to a 7.4 V battery bus, verified in SIMPLIS and laid out as a 132-component four-layer board in KiCad."
+    >
+
+    <title>Satellite Solar Array Converter | Dante Benedetti</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=26">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+
+            <a class="logo" href="../index.html">Dante Benedetti</a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="site-nav"
+            >
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav id="site-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#education">Education</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Hero -->
+        <section class="project-hero">
+
+            <div class="container">
+
+                <a class="back-link" href="../index.html#projects">
+                    &larr; Back to Projects
+                </a>
+
+                <p class="eyebrow">
+                    Power Electronics &middot; PCB Design &middot; Analog Control
+                </p>
+
+                <h1>Satellite Solar Array Power Converter</h1>
+
+                <p class="hero-text">
+                    A 30 W four-switch buck-boost converter that takes a
+                    spacecraft solar array anywhere in a 6&ndash;24 V window
+                    and holds a 7.4 V battery bus &mdash; the power stage an
+                    MPPT-regulated array needs. The control loop is closed
+                    entirely in analog hardware, with no firmware in the path.
+                </p>
+
+                <div class="project-meta">
+                    <div>
+                        <span class="meta-label">Role</span>
+                        Architecture, topology selection, analog control
+                        design, schematic capture, PCB layout
+                    </div>
+                    <div>
+                        <span class="meta-label">Timeline</span>
+                        Fall 2026
+                    </div>
+                    <div>
+                        <span class="meta-label">Team</span>
+                        Individual project (EE 5563)
+                    </div>
+                </div>
+
+                <div class="project-tags">
+                    <span>KiCad</span>
+                    <span>SIMPLIS</span>
+                    <span>Peak-Current-Mode</span>
+                    <span>Four-Switch Buck-Boost</span>
+                    <span>4-Layer</span>
+                    <span>Gate Drive</span>
+                    <span>Worst-Case Analysis</span>
+                    <span>ECSS</span>
+                </div>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/board-3d.jpg"
+                        alt="Three-dimensional render of the assembled circuit board viewed at an angle: a green four-layer board with screw terminal blocks at the left and upper right, a large black shielded inductor and an electrolytic capacitor in the power section along the top edge, dense surface-mount control circuitry across the lower two thirds, two blue trimmer potentiometers, and rows of yellow test points down the right-hand side."
+                        width="1400"
+                        height="1123"
+                    >
+                    <figcaption>
+                        Rev A as routed &mdash; 132 components on a
+                        95 &times; 70 mm four-layer board.
+                    </figcaption>
+                </figure>
+
+            </div>
+
+        </section>
+
+
+        <!-- Headline numbers -->
+        <section class="section results-section">
+
+            <div class="container">
+
+                <p class="section-label">Overview</p>
+
+                <h2>What it is, and where it stands.</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat">
+                        <span class="stat-value">30 W</span>
+                        <span class="stat-label">
+                            6&ndash;24 V solar array input into a 7.4 V
+                            two-cell battery bus
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">132</span>
+                        <span class="stat-label">
+                            Components on a 95 &times; 70 mm four-layer board,
+                            across eight schematic sheets
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">300 kHz</span>
+                        <span class="stat-label">
+                            Peak-current-mode switching with slope
+                            compensation &mdash; no microcontroller in the loop
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-value">96 mV</span>
+                        <span class="stat-label">
+                            Simulated bus deviation while the PV input sweeps
+                            from 10.3 V down to 5.0 V
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Intent + status -->
+        <section class="section">
+
+            <div class="container narrow">
+
+                <p class="section-label">Intent</p>
+
+                <h2>The converter an MPPT array needs.</h2>
+
+                <p class="large-text">
+                    A spacecraft solar array does not behave like a battery.
+                    Its output voltage shifts with illumination angle,
+                    temperature, and radiation damage over the mission, and at
+                    any moment there is one operating voltage at which it
+                    delivers the most power. Sitting anywhere else wastes array
+                    area that was expensive to launch.
+                </p>
+
+                <p>
+                    Tracking that point takes two separate things. The first is
+                    a supervisory algorithm that decides <em>where</em> on the
+                    array&rsquo;s curve to operate. The second is a converter
+                    that can actually hold the array at that voltage while
+                    still producing a usable bus &mdash; across the whole range
+                    the array might wander into.
+                </p>
+
+                <p>
+                    This project is the second of those two. The board accepts
+                    a commanded PV operating voltage and regulates the array to
+                    it, drawing whatever current that demands, while keeping
+                    the battery bus stable. An MPPT algorithm would sit on top
+                    and move that command; the hardware hook is already there,
+                    as a two-pin header that lets a microcontroller DAC
+                    override the on-board set-point trimmer.
+                </p>
+
+                <div class="project-highlight">
+                    <strong>Scope.</strong> What is designed, simulated, and
+                    laid out here is the <strong>closed-loop buck-boost
+                    converter only</strong>. The MPPT search algorithm, the
+                    battery charge management, and the downstream protected
+                    load channels belonging to the wider power-system concept
+                    are <strong>not</strong> implemented on this board and are
+                    <strong>not</strong> part of the simulation results below.
+                </div>
+
+                <h3>Achieved so far</h3>
+
+                <ul class="case-list">
+                    <li>
+                        <strong>Topology and architecture selected</strong>
+                        against the array&rsquo;s operating window, with the
+                        requirement figures traced to clauses in
+                        ECSS-E-ST-20-20C, the CubeSat Design Specification
+                        Rev 14.1, and NASA&rsquo;s small-spacecraft power
+                        benchmarks.
+                    </li>
+                    <li>
+                        <strong>Control loop designed and verified in
+                        SIMPLIS</strong> &mdash; peak-current-mode inner loop,
+                        PI outer loop, and mode comparator, checked for
+                        stability in both buck and boost.
+                    </li>
+                    <li>
+                        <strong>Worst-case analysis completed</strong>, which
+                        caught a current-sense gain error that would have
+                        capped the converter below its 30 W rating. Corrected
+                        before layout.
+                    </li>
+                    <li>
+                        <strong>Eight-sheet schematic captured and the board
+                        fully routed</strong> in KiCad &mdash; 132 components,
+                        four layers, no unconnected pads and no shorts.
+                    </li>
+                    <li>
+                        <strong>Not yet done:</strong> fabrication, assembly,
+                        and bench verification. Every waveform on this page is
+                        simulation output, not measured hardware.
+                    </li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================== DESIGN + SIMULATION ===================== -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Design and simulation</p>
+
+                <h2>The loop, built and proven in SIMPLIS.</h2>
+
+                <p class="section-intro">
+                    The regulator is built from comparators, op amps, and logic
+                    gates &mdash; nothing in the feedback path depends on
+                    software running correctly. It was designed and verified as
+                    a SIMPLIS model first, then every gain was rescaled for a
+                    single 5 V rail before it became a schematic.
+                </p>
+
+                <div class="topic-grid">
+
+                    <div class="topic">
+                        <h3>Inner current loop</h3>
+                        <p>
+                            A 300 kHz oscillator sets an SR latch each cycle. A
+                            comparator resets it when the summed inductor
+                            current and compensation ramp exceed the current
+                            reference. Slope compensation is a 0.625 V ramp per
+                            period, equal to 0.375 A/&micro;s referred to the
+                            inductor.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <h3>Outer voltage loop</h3>
+                        <p>
+                            A PI amplifier compares the divided array voltage
+                            against the set-point and produces the current
+                            reference, with a proportional gain of 8.2 and a
+                            zero at 285 Hz. Its output is clamped, so the
+                            reference can never command more current than the
+                            stage is rated for.
+                        </p>
+                    </div>
+
+                    <div class="topic">
+                        <h3>Mode selection</h3>
+                        <p>
+                            A difference amplifier measures array minus bus
+                            voltage and drives a comparator with hysteresis.
+                            Its output picks buck or boost and gates the switch
+                            drive logic, so the converter commits to one mode
+                            rather than chattering at the boundary.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Why four switches</h3>
+
+                <p>
+                    The array&rsquo;s 6&ndash;24 V window straddles the 7.4 V
+                    bus. Below 7.4 V the converter has to step up; above it,
+                    down. A buck alone cannot reach the bus from 6 V and a
+                    boost alone cannot come down from 24 V, so neither single
+                    topology covers the range. A four-switch buck-boost solves
+                    it with one inductor and one control loop, switching only
+                    the pair of devices the current mode requires and holding
+                    the other leg static.
+                </p>
+
+                <p>
+                    One consequence of that choice drove a part selection. In
+                    each mode a high-side switch must be held on continuously,
+                    and a conventional bootstrap driver cannot do it &mdash; it
+                    recharges its high-side supply only while the switching
+                    node is pulled low, which at 100 % duty never happens. On
+                    the boost-side switch it is worse: in buck mode that node
+                    never goes low at all, so the bootstrap cannot refresh even
+                    once. Both high-side devices therefore use charge-pump
+                    drivers that sustain 100 % duty indefinitely.
+                </p>
+
+                <p>
+                    A second detail worth naming: the sign of this loop is
+                    inverted relative to an ordinary supply. On a normal
+                    output-voltage regulator a rising output means back off.
+                    Here the loop regulates the <em>input</em>, so a rising
+                    array voltage means the converter is drawing too little
+                    current and must draw more.
+                </p>
+
+                <h3>Simulation results</h3>
+
+                <p>
+                    The figures below are plotted directly from the SIMPLIS
+                    output files rather than captured from the simulator
+                    window.
+                </p>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/mode-transition.svg"
+                        alt="Two stacked plots sharing a time axis from 0 to 15 milliseconds. The upper plot shows the PV voltage swept from 11 V down to about 5 V and back, crossing the 7.4 V bus level, with a shaded hysteresis band between 7.41 V and 7.60 V. The lower plot shows the MODE signal switching from buck to boost at 7.41 V on the way down and back to buck at 7.60 V on the way up."
+                        width="1400"
+                        height="820"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Mode selection. Sweeping the array through the bus
+                        voltage shows the comparator committing to boost at
+                        7.41 V on the way down and returning to buck at 7.60 V
+                        on the way up &mdash; a 183 mV hysteresis band that
+                        keeps it from oscillating between modes when the array
+                        sits near the boundary.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/closed-loop-transient.svg"
+                        alt="Two stacked plots sharing a time axis from 0 to 15 milliseconds. The upper plot shows the PV voltage sweeping from 10.3 V down to 5 V and back while the bus voltage stays nearly flat near 7.5 V. The lower plot shows the inductor current as a filled band representing its switching ripple envelope, varying between roughly 2.7 and 6.4 amps."
+                        width="1400"
+                        height="855"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Closed-loop regulation. As the array voltage is walked
+                        from 10.3 V down to 5.0 V and back &mdash; through
+                        buck, boost, and buck again &mdash; the bus holds
+                        within 96 mV, about 1.3 %. The lower trace is drawn as
+                        the switching ripple envelope rather than a single
+                        line, so the ripple&rsquo;s variation with operating
+                        point stays visible.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/loop-gain-bode.svg"
+                        alt="A Bode plot with stacked gain and phase panels over a logarithmic frequency axis from 10 Hz to 1 MHz, showing two traces. The buck-mode loop crosses 0 dB at 1,636 Hz with 159 degrees of phase margin; the boost-mode loop crosses at 1,301 Hz with 126 degrees of phase margin."
+                        width="1400"
+                        height="925"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Outer-loop gain in both modes. The compensator was
+                        checked separately in buck and boost, since the plant
+                        it drives is not the same in each &mdash; crossing at
+                        1.6 kHz and 1.3 kHz respectively, with wide phase
+                        margin in both.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/switching-node.svg"
+                        alt="A plot of the SW_A switching node voltage over 20 microseconds, showing a clean rectangular waveform switching between roughly 0 and 19 volts at 300 kilohertz."
+                        width="1400"
+                        height="515"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The switching node over a few cycles at 300 kHz, from
+                        the open-loop model used to size the stage before the
+                        control loop was wrapped around it.
+                    </figcaption>
+                </figure>
+
+                <h3>Worst case, not nominal</h3>
+
+                <p>
+                    The current limit on this converter is not a single number.
+                    Because slope compensation adds a ramp that grows across
+                    each switching cycle, the current at which the comparator
+                    trips <em>falls</em> as duty cycle rises. The limit is an
+                    envelope, and it has to be checked at every operating
+                    corner.
+                </p>
+
+                <p>
+                    Working that envelope out exposed a part-selection error.
+                    The schematic had been drawn with a current-sense amplifier
+                    of twice the intended gain, which halves the envelope to
+                    roughly 2.6&ndash;3.2 A &mdash; below the 5.19 A peak
+                    inductor current at the deep-boost corner. The converter
+                    would have gone into current limit before reaching its
+                    30 W rating, and on the bench it would have looked like a
+                    mysterious power ceiling rather than an obvious fault. With
+                    the correct amplifier the envelope is 5.2&ndash;6.5 A,
+                    giving 20 %, 27 %, and 24 % margin at the three operating
+                    corners.
+                </p>
+
+                <div class="project-highlight">
+                    Checking against worst case rather than nominal turned a
+                    subtle 30 % performance shortfall into a one-line part
+                    substitution &mdash; caught on paper instead of on the
+                    bench.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===================== SCHEMATIC + LAYOUT ===================== -->
+        <section class="section">
+
+            <div class="container">
+
+                <p class="section-label">Schematic and PCB layout</p>
+
+                <h2>Eight sheets onto four layers in KiCad.</h2>
+
+                <p class="section-intro">
+                    132 components, 1,231 track segments, 210 vias, and about
+                    3.1 metres of copper on a 95 &times; 70 mm board. Fully
+                    routed, with no unconnected pads and no shorts.
+                </p>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/sheet-power-stage.svg"
+                        alt="KiCad schematic sheet of the power stage: the four-switch bridge built from three MOSFETs and two Schottky diodes around a 10 microhenry inductor and a 5 milliohm current-sense shunt, with ceramic and bulk capacitor banks on the PV input and battery bus sides and test points on each switching node."
+                        width="1400"
+                        height="990"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The power stage. A 10 &micro;H inductor between two
+                        switch legs, with a 5 m&Omega; Kelvin-sensed shunt in
+                        series for current feedback, and unpopulated RC snubber
+                        pads on both switching nodes so they can be fitted if
+                        the bench shows ringing.
+                    </figcaption>
+                </figure>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/sheet-pwm-modulator.svg"
+                        alt="KiCad schematic sheet of the PWM modulator: a Schmitt-trigger oscillator generating a 300 kHz clock and a 100 nanosecond set pulse, an RC ramp generator reset each cycle by a small MOSFET, a summing amplifier combining sensed current with the ramp, a high-speed comparator, and a cross-coupled NOR latch producing the PWM output."
+                        width="1400"
+                        height="990"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The modulator. Clock and set pulse on the left, ramp
+                        generator and summing amplifier in the middle, and the
+                        comparator into a cross-coupled NOR latch on the right
+                        &mdash; a peak-current-mode modulator in discrete parts.
+                    </figcaption>
+                </figure>
+
+                <h3>Splitting the grounds</h3>
+
+                <p>
+                    The most consequential decision in the layout was not a
+                    routing choice but a grounding one. The switching return and
+                    the analog return are separate copper planes, joined at
+                    exactly one point on the board.
+                </p>
+
+                <p>
+                    The power stage slams several amps on and off at 300 kHz. If
+                    that return current shares copper with the millivolt signals
+                    the error amplifier and current-sense amplifier work with,
+                    the voltage developed across the shared impedance is
+                    injected straight into the feedback path. Keeping the planes
+                    separate means the switching return never flows through the
+                    analog reference; tying them at a single star point means
+                    the two still share a potential without forming a loop.
+                </p>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/ground-planes.svg"
+                        alt="Two side-by-side board outlines showing the inner copper layers. The first, In1.Cu, is divided into an upper orange region labelled PGND for the switching return under the power stage and a lower blue region labelled GND for the quiet analog return under the control section, with a star marking the single tie point between them. The second, In2.Cu, keeps only the orange PGND plane under the power stage, leaving the control band free for routing."
+                        width="1400"
+                        height="630"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        The two inner layers. PGND carries the switching return
+                        under the power stage; GND is the quiet reference under
+                        the control section. They meet only at NT1. The second
+                        inner layer keeps its plane under the power stage
+                        &mdash; where doubling it lowers the commutation-loop
+                        return impedance and spreads heat &mdash; and is freed
+                        for routing under the control section, where the
+                        congestion actually was.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    Several rules follow from that split, and they constrained
+                    the routing more than any clearance rule did:
+                </p>
+
+                <ul class="case-list">
+                    <li>
+                        No signal may cross the boundary between the two
+                        reference regions. A trace that crosses it has no
+                        continuous return path beneath it, and the return
+                        current is forced into a detour that becomes a loop
+                        antenna.
+                    </li>
+                    <li>
+                        The switching nodes get no copper pour and stay off the
+                        inner layers entirely. They are the aggressors &mdash;
+                        the goal is to keep their area small, not to give them
+                        more copper.
+                    </li>
+                    <li>
+                        Power nets carry a 2.0 mm minimum width as a
+                        rule-violation trap rather than a routing target. Real
+                        capacity comes from shaped copper following the
+                        commutation loop; the minimum exists so an accidental
+                        neck-down gets flagged.
+                    </li>
+                    <li>
+                        Control-loop components sit 33&ndash;46 mm from the
+                        switching-node copper, except the three that physically
+                        must sit at the current-sense shunt.
+                    </li>
+                </ul>
+
+                <figure class="project-figure wide plot">
+                    <img
+                        src="../images/fsbb/layer-fcu.svg"
+                        alt="Top copper layer plot of the board showing routed traces, component pads, and two large filled copper pours for the PV input and battery bus nets in the power section."
+                        width="1400"
+                        height="1031"
+                        loading="lazy"
+                    >
+                    <figcaption>
+                        Top copper. The input and output pours are shaped to the
+                        current path rather than drawn as uniform-width tracks.
+                    </figcaption>
+                </figure>
+
+                <h3>Built to be measured</h3>
+
+                <p>
+                    27 test points, grouped by function into power, gate, sense,
+                    and logic clusters so a probe can walk the signal chain
+                    without hunting. The current-sense shunt has Kelvin pads. A
+                    resistor in the feedback path, with a header across it, lets
+                    a network analyser inject a disturbance and measure loop
+                    gain on the bench at the same point the simulation measured
+                    it.
+                </p>
+
+                <p>
+                    One measurement caveat came out of checking the layout
+                    against how the board would actually be probed. The gate
+                    test points sit in a tidy row about 19 mm from the
+                    transistor gates they monitor. That stub is roughly
+                    15&ndash;20 nH, and against the gate capacitance of those
+                    devices it rings near 29 MHz &mdash; inside the spectrum of
+                    a real gate edge. The test point would show a ringing
+                    artifact the gate itself does not have. It is recorded as a
+                    known limitation for this revision rather than left to
+                    mislead whoever probes it.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Documentation -->
+        <section class="section alt-section">
+
+            <div class="container">
+
+                <p class="section-label">Documentation</p>
+
+                <h2>Schematic.</h2>
+
+                <div class="link-row">
+
+                    <a
+                        class="button primary"
+                        href="../files/FSBB_Schematic_RevA.pdf"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Read the Rev A schematic (PDF)
+                    </a>
+
+                </div>
+
+                <p class="doc-note">
+                    All eight sheets: power stage, gate drive, current sense,
+                    PWM modulator, error amplifier, mode logic, and housekeeping
+                    supplies.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 Dante Benedetti</p>
+            <p>dantebenedetti.com</p>
+        </div>
+    </footer>
+
+
+    <script src="../js/main.js?v=26"></script>
+
+</body>
+</html>

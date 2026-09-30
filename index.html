@@ -11,7 +11,7 @@
 
     <title>Dante Benedetti | Electrical Engineering Portfolio</title>
 
-    <link rel="stylesheet" href="css/style.css?v=25">
+    <link rel="stylesheet" href="css/style.css?v=26">
 </head>
 
 <body>
@@ -157,8 +157,65 @@
                 <div class="project-grid">
 
 
-                    <!-- LitterBot -->
+
+                    <!-- Satellite solar array converter -->
                     <article class="project-card featured-project">
+
+                        <img
+                            class="project-image"
+                            src="images/fsbb/board-3d.jpg"
+                            alt="Three-dimensional render of a green four-layer power converter board with screw terminals, a large shielded inductor, dense surface-mount control circuitry, and rows of yellow test points."
+                            width="1400"
+                            height="1123"
+                            loading="lazy"
+                        >
+
+                        <div class="project-content">
+
+                            <p class="project-type">
+                                Power Electronics &middot; PCB Design &middot; Analog Control
+                            </p>
+
+                            <h3>
+                                Satellite Solar Array Power Converter
+                            </h3>
+
+                            <p>
+                                Designed a 30 W four-switch buck-boost converter
+                                that takes a spacecraft solar array anywhere in a
+                                6&ndash;24 V window and holds a 7.4 V battery bus
+                                &mdash; the power stage an MPPT-regulated array
+                                needs.
+                            </p>
+
+                            <p>
+                                The control loop is closed entirely in analog
+                                hardware and was verified in SIMPLIS before
+                                layout. Captured as an eight-sheet schematic and
+                                routed as a 132-component, four-layer board in
+                                KiCad with split switching and analog ground
+                                planes tied at a single star point.
+                            </p>
+
+                            <div class="project-tags">
+                                <span>KiCad</span>
+                                <span>SIMPLIS</span>
+                                <span>Peak-Current-Mode</span>
+                                <span>4-Layer</span>
+                                <span>Gate Drive</span>
+                                <span>ECSS</span>
+                            </div>
+
+                            <a href="projects/fsbb.html">
+                                View Project &rarr;
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                    <!-- LitterBot -->
+                    <article class="project-card">
 
                         <img
                             class="project-image"
@@ -949,7 +1006,7 @@
     </footer>
 
 
-    <script src="js/main.js?v=25"></script>
+    <script src="js/main.js?v=26"></script>
 
 </body>
 </html>
